@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>TD 2 - The quorum, then the routing rule | ESILV</title><style>
+:root{--ink:#18283d;--blue:#165c79;--line:#cbd7df;--bg:#eef3f6;--paper:#fff}
+*{box-sizing:border-box}html{scroll-padding-top:62px}body{margin:0;color:var(--ink);background:var(--bg);font:17px/1.55 system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:#075e83;overflow-wrap:anywhere}header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:2px solid var(--blue)}
+.bar{min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:3px 16px;flex-wrap:wrap}.brand{font-size:.86rem;font-weight:700}
+button{font:inherit;min-height:40px;padding:6px 12px;border:1px solid var(--line);background:#fff;border-radius:5px;cursor:pointer;color:var(--ink)}
+#header-content{padding:0 16px 12px}nav{display:flex;flex-wrap:wrap;gap:6px}nav a{padding:4px 10px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:.85rem;max-width:100%}
+header.collapsed #header-content,header.collapsed .brand{display:none}header.collapsed .bar{justify-content:flex-end}
+main{max-width:1040px;margin:24px auto 50px;background:var(--paper);padding:32px 44px;border-radius:10px}
+h1{font-size:2rem;line-height:1.15;color:var(--blue)}h2{font-size:1.38rem;color:var(--blue);margin:34px 0 12px;border-top:1px solid var(--line);padding-top:16px}h3{font-size:1.12rem}
+section.slide{border-bottom:1px solid var(--line);padding:22px 0;display:block;min-height:0}.slide h1{font-size:1.8rem}.chapitre-tag,.meta,.sub{color:#45566b}.card{border:1px solid var(--line);padding:12px;margin:8px 0;border-radius:6px}.cards,.grid-2,.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:12px}
+.notice{border-left:5px solid #ba7419;background:#fff4dc;padding:12px 16px;margin:0 0 24px;font-size:.96rem}.notice p{margin:4px 0}.notice.final{border-left-color:#2d7a4f;background:#eef7f1}.notice.pack{border-left-color:#165c79;background:#f4fafc}p,li{max-width:86ch}
+.tableau{overflow-x:auto;max-width:100%;margin:16px 0}table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{background:#e7eff3}pre{overflow-x:auto;padding:16px;background:#edf2f7;border-radius:6px;font-size:.86rem}code{font-family:ui-monospace,monospace;font-size:.91em;overflow-wrap:anywhere}pre code{overflow-wrap:normal}summary{min-height:40px;cursor:pointer;padding:8px 0;font-weight:600}
+blockquote{margin:12px 0;padding:8px 16px;border-left:3px solid var(--line)}.toc{padding:16px;background:#f2f6f8}.toc ul{columns:2;column-gap:32px}.toc li{break-inside:avoid;margin:3px 0}.check{display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid #e4eaf0;padding:10px 0}.check input{width:22px;height:22px;flex:none;margin:4px 0}.check label{cursor:pointer}.unit{break-inside:avoid}.evidence{font-size:.9rem;color:#46586d}.pill{display:inline-block;background:#e6f1f4;padding:3px 8px;border-radius:4px;font-size:.83rem}.steps{list-style:none;padding:0;margin:18px 0;counter-reset:pas}.steps>li{counter-increment:pas;display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0;background:#fbfdfe;break-inside:avoid}.steps>li::before{content:counter(pas);flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;font-size:1.05rem;display:flex;align-items:center;justify-content:center}.steps .body{flex:1 1 auto;min-width:0}.steps .what{font-weight:700;font-size:1.02rem}.steps .what svg{vertical-align:-4px;margin-right:8px}.steps .how{margin:5px 0 0}.steps .ok{margin:7px 0 0;font-size:.93rem;border-left:4px solid #2d7a4f;background:#eef7f1;padding:6px 10px;border-radius:0 5px 5px 0}.steps .ko{margin:5px 0 0;font-size:.93rem;border-left:4px solid #ba7419;background:#fff4dc;padding:6px 10px;border-radius:0 5px 5px 0}.steps .time{display:inline-block;background:#e6f1f4;padding:2px 8px;border-radius:4px;font-size:.82rem;font-weight:600}.gate{border:2px solid var(--blue);border-radius:8px;padding:14px 18px;margin:22px 0;background:#f4fafc}.gate p{margin:5px 0}.gate .flag{font-weight:700;color:var(--blue)}@media(max-width:700px){.steps>li{gap:11px;padding:12px}.steps>li::before{flex-basis:32px;width:32px;height:32px;font-size:.95rem}}@media print{.steps>li{background:#fff}.gate{background:#fff}}footer{max-width:1040px;margin:auto;padding:0 24px 28px;font-size:.85rem;color:#495d70}
+@media(max-width:700px){body{font-size:16px}main{margin:10px 6px;padding:20px 15px}h1{font-size:1.6rem}.toc ul{columns:1}.bar{padding:3px 10px}#header-content{padding:0 10px 10px}}
+@media print{header,.toc,.self-check-help,footer{display:none}body{background:white;font-size:10pt;line-height:1.35}main{padding:0;margin:0;border-radius:0;max-width:none}h1{font-size:20pt}h2{font-size:14pt;break-after:avoid;margin-top:18pt}h3{font-size:12pt;break-after:avoid}thead{display:table-header-group;break-after:avoid}p,li,tr,.check{break-inside:avoid}.tableau{overflow:visible}table{font-size:8.3pt}th,td{padding:5pt}pre{white-space:pre-wrap;overflow:visible}a{color:inherit;text-decoration:none}.notice{border:1pt solid #aaa;background:#fff}.unit{break-inside:auto}.check input{display:none}footer{font-size:8pt;padding:12pt 0}section.slide{break-before:page}.slide:first-of-type{break-before:auto}@page{size:A4;margin:17mm;@bottom-right{content:counter(page);font-size:8pt;color:#526477}}}
+
+a.download{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;background:#165c79;color:#fff;border-radius:5px;font-weight:700;text-decoration:none}
+</style></head>
+<body><header><div class="bar"><span class="brand">ESILV · Trustworthy Generative AI · 2026-10-14-students-1</span><button id="header-toggle" aria-expanded="true" aria-controls="header-content">Collapse header</button></div><div id="header-content"><nav aria-label="Resource navigation"><a href="../../index.html">Home</a><a href="../before-td1-en.html">Before TD 1</a><a href="../start-here-en.html">Resources</a><a href="../assessment-en.html">Assessment</a><a href="../submission-en.html">Hand-in</a><a href="../resource-index-en.html">Files</a></nav></div></header>
+<main><h1 id="section-1">TD 2 - The quorum, then the routing rule</h1><aside class="notice"><p><strong>Beta · 2026-10-14-students-1, 14 October 2026</strong></p><p>Beta: this resource may still change before its session. The site is updated in place; the pack version above identifies what you read.</p></aside><details class="toc"><summary>Contents (10 sections)</summary><ul><li><a href="#section-2">What you can do by the end of the session</a></li><li><a href="#section-3">Material provided</a></li><li><a href="#section-4">Schedule</a></li><li><a href="#section-5">Step 1 - The k-of-n vote (13:45 to 15:00)</a></li><li><a href="#section-6">Step 2 - The wrong consensus (15:00 to 15:45)</a></li><li><a href="#section-8">Step 3 - The routing rule (16:00 to 17:15)</a></li><li><a href="#section-9">Step 4 - Plenary (17:15 to 17:45)</a></li><li><a href="#section-10">What is expected (the evaluated artefacts)</a></li><li><a href="#section-11">Hand-in and session report</a></li><li><a href="#section-12">What is valued</a></li></ul></details>
+<blockquote><p>Beta. Pack 2026-10-14-students-1. Set your machine up with <a href="../before-td1-en.html">Before TD 1</a>.</p></blockquote>
+<p><strong>Module: Trustworthy generative AI. Session 2 (18 November), 13:30 to 18:00.</strong></p>
+<p>In TD 1, you measured five models separately and placed each one in the portfolio. This session builds the two decisions of a service: having several models vote when the answer carries consequences, and assigning each question to the cheapest model that remains up to it. By 18:00, your vote runs on the twenty questions, you have explained a wrong-consensus case from your batch or a supplied example, and your routing rule is written and exercised on a simulator.</p>
+<h2 id="section-2">What you can do by the end of the session</h2>
+<ul>
+<li>Implement a k-of-n vote on a panel of distinct families, with a strict majority, which keeps a value or abstains without manufacturing an answer.</li>
+<li>Identify a wrong consensus in traces, explain its cause and draw the consequence for the choice of panel and of checking.</li>
+<li>Write a routing rule per question family, justified by the TD 1 results, which provides for the quorum, the deferral and the abstention.</li>
+<li>Read the decisions of a resource simulator and adapt its policy to your rule.</li>
+</ul>
+<h2 id="section-3">Material provided</h2>
+<ul>
+<li>Your TD 1 traces (<code>traces-td1.csv</code>, merged between the members) and your models x questions table with the portfolio sheet.</li>
+<li><code>skeleton-multi-llm-en.py</code>: the <code>Orchestrateur.vote_k_sur_n</code> method is to be completed; the rest of the skeleton does not change.</li>
+<li><code>atelier-vote.py</code>: exercises your vote on four synthetic examples, then on the real traces question by question, with a fixed panel of three families: <code>openai/gpt-oss-120b</code> (Groq), <code>cohere/north-mini-code:free</code> (OpenRouter), <code>qwen/qwen3.8-27b</code> (Groq).</li>
+<li><code>atelier-routage.py</code>: a routing simulator on three fictitious resources and seven scenarios, without any call to a provider.</li>
+<li><a href="portefeuille-modeles-en.html">portefeuille-modeles-en</a> and its CSV, for the prices and the access routes.</li>
+<li>Your stored TD 1 traces. An optional new experiment uses a separate allocation agreed with the instructor and current account allowances.</li>
+</ul>
+<h2 id="section-4">Schedule</h2>
+<div class="tableau"><table>
+<thead>
+<tr><th>Time</th><th>Step</th><th>Expected output</th></tr>
+</thead>
+<tbody>
+<tr><td>13:30 to 13:45</td><td>Roles, state of the TD 1 traces</td><td>merged traces, one table per sub-group</td></tr>
+<tr><td>13:45 to 15:00</td><td><strong>Step 1</strong>: the k-of-n vote in the skeleton, exercised on the traces</td><td><code>vote_k_sur_n</code>, decisions on twenty questions</td></tr>
+<tr><td>15:00 to 15:45</td><td><strong>Step 2</strong>: at least one wrong consensus, its cause, the consequence</td><td>commented case</td></tr>
+<tr><td>15:45 to 16:00</td><td>Break</td><td></td></tr>
+<tr><td>16:00 to 17:15</td><td><strong>Step 3</strong>: the routing rule, written then exercised on the simulator</td><td>one-page rule, simulator outputs</td></tr>
+<tr><td>17:15 to 17:45</td><td><strong>Step 4</strong>: plenary</td><td>collective finding</td></tr>
+<tr><td>17:45 to 18:00</td><td>Marking of the session</td><td>Q1, Q2 and Q3 marked on the sheet</td></tr>
+</tbody>
+</table></div>
+<h2 id="section-5">Step 1 - The k-of-n vote (13:45 to 15:00)</h2>
+<p>Complete <code>Orchestrateur.vote_k_sur_n(self, traces_question, k)</code> in <code>skeleton-multi-llm-en.py</code>. Each element of <code>traces_question</code> carries <code>provider</code>, <code>model_requested</code>, <code>value</code> (an integer in cents, or <code>None</code>) and <code>verdict</code> (<code>executed</code> or <code>error</code>). The contract:</p>
+<ol>
+<li>only the executed proposals with a value vote; an error or an unavailability stays in n without a vote;</li>
+<li>k is a strict majority: <code>n // 2 &lt; k &lt;= n</code>, otherwise the method refuses;</li>
+<li>two proposals from the same provider and model pair are refused: a duplicate is not a second vote;</li>
+<li>if a value reaches k votes, the method returns <code>{"consensus": True, "value": v, "votes": nombre, "models": [...]}</code>;</li>
+<li>otherwise it returns <code>{"consensus": False, "value": None, "votes": plus grand nombre de voix, "models": []}</code>. It never invents a value.</li>
+</ol>
+<p>Exercise the vote:</p>
+<pre><code>python3 atelier-vote.py                                   # four synthetic examples, no network
+python3 atelier-vote.py --traces traces-td1.csv --case C02 # the real traces of one question</code></pre>
+<p>The second call takes, for each member of the panel, its last attempt on the question, decides, then compares the value kept with your reference. The comparison comes after the decision: the vote does not know the reference. Run the command again for the twenty questions and record, per question: consensus or abstention, value, votes, agreement with the reference.</p>
+<p>Use TD 1 traces for the required work: no new network batch is needed. Any optional repeat uses a separately agreed allocation, current account counters and distinct experiment files.</p>
+<p><strong>Deliverable of the step</strong>: the completed method, and the table of the twenty decisions of the vote.</p>
+<h2 id="section-6">Step 2 - The wrong consensus (15:00 to 15:45)</h2>
+<p>Find an identified case where at least two models return the same wrong value. Show the question, values, independent reference and cause in the SQL. State its nature: real batch, supplied historical real case or synthetic example. If your own batch contains none, use the instructor's case or the synthetic fallback supplied by <code>atelier-vote.py</code>; access to Q2 level 2 is unchanged.</p>
+<p>Declare the panel and threshold k out of n, then show what that quorum returns. Agreement between two of the five TD 1 models does not establish the result of the fixed 2-of-3 panel. Dots is not a member of that panel. Explain an independent check that detects the shared error; a different panel or escalation is a candidate check, not a guarantee.</p>
+<p><strong>Deliverable</strong>: one explained case with its identifier, source/nature, agreeing models, reference, declared quorum result and checking method. Keep a supplied or synthetic case separate from your batch's measured counts.</p>
+<h3 id="section-7">Supplied synthetic case: DEMO-VOTE</h3>
+<p>The workshop's <code>wrong consensus</code> example has proposals <code>[0, 0, 100]</code>, reference 100 cents and threshold 2 of 3. To explain a possible shared SQL cause, use this invented sale: date <code>2026-01-01</code>, amount 100 cents. The requested period is 1 January inclusive to 2 January exclusive. Two proposals use <code>sale_date &gt; '2026-01-01'</code>; the third uses <code>sale_date &gt;= '2026-01-01'</code>. All use <code>sale_date &lt; '2026-01-02'</code> and <code>COALESCE(SUM(amount_cents), 0)</code>. Execute both variants on this one-row toy table, explain the boundary and compare the quorum with the independent reference. These values and queries are constructed teaching material, not model outputs or answers on the shop database.</p>
+<h2 id="section-8">Step 3 - The routing rule (16:00 to 17:15)</h2>
+<p>Write, on one page, the rule of the sub-group. For each question family (period, completed age at a date, age at the order, product list, combinations):</p>
+<ul>
+<li>the first model called: the cheapest one, according to the portfolio, among those that your TD 1 table shows to be correct on the family;</li>
+<li>the checking: none, 2-of-3 quorum, 3-of-5 quorum, reference, review, according to what an error costs for three uses (internal dashboard, figure shown to the customer, amount paid out);</li>
+<li>the course of action if the first model is unavailable: next model, waiting for the refill when the request can wait, abstention.</li>
+</ul>
+<p>Each line cites the cells of the TD 1 table that justify it. Keep simple period and product questions: they help compare routing choices. Twenty questions support a batch-specific hypothesis, not a general error rate, a permanent ranking or a quorum error guarantee.</p>
+<p>Then launch the simulator:</p>
+<pre><code>python3 atelier-routage.py                       # the seven scenarios
+python3 atelier-routage.py --scenario deferrable # one scenario</code></pre>
+<p>Read each decision (<code>run</code>, <code>defer</code>, <code>abstain</code>), its resource and its reason. Then adapt <code>RESOURCES</code> and <code>choose</code> to your rule: add your models with their level and their price, and write the reason that the trace must carry. The levels, availabilities and prices of the simulator are fictitious; those of your rule come from the portfolio and from TD 1.</p>
+<p><strong>Deliverable of the step</strong>: the one-page rule and the simulator outputs, before and after adaptation.</p>
+<h2 id="section-9">Step 4 - Plenary (17:15 to 17:45)</h2>
+<p>Each sub-group presents its wrong consensus and its rule. Compare the rules: the same database, the same traces, rules that differ by the checking retained and by the cost accepted. Note the questions for which no free model is enough on its own: they set the price of checking in TD 3.</p>
+<p>The instructor then marks the session at each table: Q1, Q2 and Q3, each 0, 1 or 2, on the sheet laid on your table since TD 1.</p>
+<h2 id="section-10">What is expected (the evaluated artefacts)</h2>
+<ol>
+<li><code>skeleton-multi-llm-en.py</code> with <code>vote_k_sur_n</code> completed.</li>
+<li>The table of the twenty decisions of the vote: consensus or abstention, value, votes, agreement with the reference.</li>
+<li>At least one commented wrong consensus: question, value, models, cause, consequence.</li>
+<li>The one-page routing rule, with the TD 1 cells that justify it.</li>
+<li>The simulator outputs, before and after adaptation.</li>
+<li>The prompts, as used, if they have changed since TD 1.</li>
+</ol>
+<h2 id="section-11">Hand-in and session report</h2>
+<p>At the end of TD 2, add <code>reports/td2.md</code> to your sub-group's public Git repository, shared from TD 1 to TD 3. Describe the work attempted and completed, successes and failures with links to the results and traces, observed causes and hypotheses, limitations, each member's contribution and next steps. Identify replayed or synthetic examples explicitly.</p>
+<p>Commit the report with the code, prompts and evidence. Update your entry in the same Moodle hand-in area with the full repository URL, the session's full commit hash and a link to the report at that commit. Retain earlier TD entries and reports. Check that the repository opens without signing in. Follow the hand-in dates announced in Moodle.</p>
+<h2 id="section-12">What is valued</h2>
+<ul>
+<li><strong>A vote that abstains</strong> when no value reaches k, and that keeps an unavailable member in n.</li>
+<li><strong>A wrong consensus explained</strong> by the returned queries, with the consequence for the panel or the checking.</li>
+<li><strong>A rule justified by the traces</strong>: each choice of model refers back to cells of TD 1, each check to a cost of error.</li>
+<li><strong>A readable reason</strong> in each decision of the simulator.</li>
+</ul></main><footer>Didier Parisot · ESILV · Pack 2026-10-14-students-1.</footer><script>
+(()=>{'use strict';const header=document.querySelector('header'),button=document.getElementById('header-toggle');
+const key='esilv-beta-header:'+location.pathname;let saved=null;try{saved=localStorage.getItem(key)}catch(e){}
+function setHeader(collapsed){header.classList.toggle('collapsed',collapsed);button.setAttribute('aria-expanded',String(!collapsed));button.textContent=collapsed?'Expand header':'Collapse header';document.documentElement.style.scrollPaddingTop=(header.offsetHeight+12)+'px';}
+setHeader(saved===null?matchMedia('(max-width:700px)').matches:saved==='collapsed');button.addEventListener('click',()=>{const c=!header.classList.contains('collapsed');setHeader(c);try{localStorage.setItem(key,c?'collapsed':'expanded')}catch(e){}});
+addEventListener('resize',()=>setHeader(header.classList.contains('collapsed')));
+document.querySelectorAll('input[data-check]').forEach(box=>{const k='esilv-beta-review-1:'+location.pathname+':'+box.dataset.check;try{box.checked=localStorage.getItem(k)==='1'}catch(e){}box.addEventListener('change',()=>{try{localStorage.setItem(k,box.checked?'1':'0')}catch(e){}})});
+})();
+</script></body></html>
