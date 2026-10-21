@@ -80,3 +80,18 @@ Open blocks and known failures are listed in each session report; unsuccessful a
 ## AI assistance
 
 AI-assisted coding is used. The prompts are kept in `prompts-en.md` as they were used, and decisions are explained in the reports.
+
+## TD1 reference calculation (Bertrand)
+
+`reference-td1.csv` contains the twenty SQL queries and their computed amounts.
+On 21 October 2026, all twenty SQLite results agreed with a separate computation
+on the supplied CSV files. To reproduce, from the repository root:
+
+```fish
+python3 scripts/verify_references.py
+```
+
+See `reports/reference-method.md` for conventions, contribution and limitations,
+and `reports/reference-verification.csv` for the per-case comparison.
+Human cross-check and instructor validation remain pending. No real model batch
+has been run as part of this calculation.
