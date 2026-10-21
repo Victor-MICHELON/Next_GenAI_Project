@@ -10,7 +10,12 @@ This repository is shared by all members of our sub-group and is kept from TD 1 
 | Member | GitHub | Main contributions |
 |---|---|---|
 | Victor Michelon | `<TODO>` | `<TODO>` |
-| `<TODO>` | `<TODO>` | `<TODO>` |
+| Bertrand Maigre | `<TODO>` | `<TODO>` |
+| Jean-Baptiste Pasteau | `<TODO>` | `<TODO>` |
+| Oscar Dujardin | `<TODO>` | `<TODO>` |
+| Cyprien Avnel | `<TODO>` | `<TODO>` |
+| Héloïse Moynot | `<TODO>` | `<TODO>` |
+
 
 The per-member split of work is detailed in each session report and in `contributions` tables where applicable.
 
