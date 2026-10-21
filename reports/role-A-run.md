@@ -41,7 +41,9 @@ python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-120b --cases
 | Retries | 0 |
 | Access errors | 0 |
 | Access checks in this run | 0 (earlier `check_access.py` runs counted separately) |
-| Groq allowance before / after | `<TODO: read from Groq console>` |
+| Groq allowance before the run | Not recorded |
+| Groq key usage after the run | 23 API calls over 24 h on key `my-API` (console, 21 October 2026 14:53 local time: [screenshot](evidence/role-A/groq-api-keys-2026-10-21.png)); the counter covers every model called with that key, including access checks, so it is not a 120B-only figure |
+| Groq model limits (RPD, TPD, RPM, TPM) | Not recorded |
 
 ## Results
 
@@ -76,7 +78,7 @@ Latency: median 907 ms, range 488-1888 ms.
 | Reasoning tokens | 3,103, already included in output tokens (each call's reasoning count is below its completion count), not added |
 | Native cost | Empty in every row: N/A |
 | API-equivalent cost | (12,814 x 0.15 + 5,157 x 0.60) / 1,000,000 = 0.0050 USD excl. tax, Groq Developer prices of 5 October 2026 (`methode-cout-en.md`) |
-| Real spend | 0 USD only once the Free plan without billing is evidenced (`<TODO: dated console evidence>`); N/A until then |
+| Real spend | N/A: the operator reports no spend, but no dated plan or billing evidence is attached; the key-usage screenshot shows no Groq amount. To become 0 USD once a Groq Billing/Plan capture shows the Free plan without a payment method |
 
 ## Limitations
 
