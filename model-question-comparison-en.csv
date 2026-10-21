@@ -1,21 +1,101 @@
 case_id,model_id,trace_file,cell_id,nature,status,value_cents,reference_cents,explanation
-C01,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C01,real,correct,792800,792800,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:18 UTC
-C02,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C02,real,correct,590320,590320,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:23 UTC
-C03,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C03,real,correct,936350,936350,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:26 UTC
-C04,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C04,real,correct,2826250,2826250,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:30 UTC
-C05,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C05,real,correct,38480,38480,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:34 UTC
-C06,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C06,real,correct,0,0,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:38 UTC
-C07,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C07,real,correct,13970,13970,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:41 UTC
-C08,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C08,real,correct,605580,605580,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:45 UTC
-C09,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C09,real,correct,487980,487980,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:50 UTC
-C10,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C10,real,correct,558980,558980,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:54 UTC
-C11,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C11,real,correct,446690,446690,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:57 UTC
-C12,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C12,real,correct,1666490,1666490,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:01 UTC
-C13,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C13,real,correct,107740,107740,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:05 UTC
-C14,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C14,real,correct,0,0,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:09 UTC
-C15,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C15,real,correct,168680,168680,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:13 UTC
-C16,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C16,real,correct,376740,376740,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:17 UTC
-C17,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C17,real,correct,258180,258180,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:21 UTC
-C18,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C18,real,correct,62480,62480,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:26 UTC
-C19,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C19,real,correct,1990,1990,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:30 UTC
-C20,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C20,real,correct,1106090,1106090,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:33 UTC
+C01,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C01,real,correct,792800,792800,correct
+C02,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C02,real,correct,590320,590320,correct
+C03,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C03,real,correct,936350,936350,correct
+C04,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C04,real,correct,2826250,2826250,correct
+C05,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C05,real,correct,38480,38480,correct
+C06,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C06,real,correct,0,0,correct
+C07,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C07,real,correct,13970,13970,correct
+C08,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C08,real,correct,605580,605580,correct
+C09,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C09,real,correct,487980,487980,correct
+C10,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C10,real,correct,558980,558980,correct
+C11,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C11,real,correct,446690,446690,correct
+C12,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C12,real,correct,1666490,1666490,correct
+C13,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C13,real,correct,107740,107740,correct
+C14,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C14,real,correct,0,0,correct
+C15,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C15,real,correct,168680,168680,correct
+C16,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C16,real,correct,376740,376740,correct
+C17,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C17,real,correct,258180,258180,correct
+C18,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C18,real,correct,62480,62480,correct
+C19,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C19,real,correct,1990,1990,correct
+C20,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C20,real,correct,1106090,1106090,correct
+C01,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C01,real,correct,792800,792800,correct
+C02,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C02,real,incorrect,0,590320,"Bornes de naissance ]2025-09-25, 2026-09-25] : il manque le décalage de 25 ans, le filtre vise des bébés (âge 0). Voir notes/echecs-td1.md#groqopenaigpt-oss-20b--c02"
+C03,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C03,real,correct,936350,936350,correct
+C04,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C04,real,correct,2826250,2826250,correct
+C05,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C05,real,correct,38480,38480,correct
+C06,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C06,real,correct,0,0,correct
+C07,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C07,real,correct,13970,13970,correct
+C08,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C08,real,correct,605580,605580,correct
+C09,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C09,real,correct,487980,487980,correct
+C10,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C10,real,correct,558980,558980,correct
+C11,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C11,real,incorrect,322160,446690,"Bornes de naissance ]2001-12-01, 2006-12-01] : la requête retient les 20-24 ans au lieu des 25 ans révolus. Voir notes/echecs-td1.md#groqopenaigpt-oss-20b--c11"
+C12,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C12,real,correct,1666490,1666490,correct
+C13,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C13,real,correct,107740,107740,correct
+C14,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C14,real,correct,0,0,correct
+C15,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C15,real,correct,168680,168680,correct
+C16,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C16,real,correct,376740,376740,correct
+C17,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C17,real,correct,258180,258180,correct
+C18,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C18,real,correct,62480,62480,correct
+C19,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C19,real,correct,1990,1990,correct
+C20,groq:openai/gpt-oss-20b,traces-B.csv,groq:openai/gpt-oss-20b:C20,real,correct,1106090,1106090,correct
+C01,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C01,real,correct,792800,792800,correct
+C02,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C02,real,incorrect,321340,590320,"L'âge est calculé avec l'année de la commande (SUBSTR(o.date,1,4)) au lieu de la date de référence 2026-09-25. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c02"
+C03,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C03,real,correct,936350,936350,correct
+C04,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C04,real,correct,2826250,2826250,correct
+C05,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C05,real,correct,38480,38480,correct
+C06,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C06,real,correct,0,0,correct
+C07,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C07,real,correct,13970,13970,correct
+C08,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C08,real,incorrect,0,605580,"Le calcul d'âge n'utilise jamais la date de référence 2026-09-24 : année de naissance moins 0 ou 1, jamais égale à 25. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c08"
+C09,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C09,real,incorrect,0,487980,Le calcul d'âge n'utilise pas la date de référence 2026-09-26 (année de naissance ± 1 = 25) et ajoute un filtre de période non demandé. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c09
+C10,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C10,real,sql_invalid,,558980,"SQL invalide : parenthèse non fermée sur la ligne AND CAST(strftime('%m-%d', o.date) >= CAST(... (13 ouvrantes, 12 fermantes). Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c10"
+C11,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C11,real,incorrect,0,446690,"Différence d'années inversée (naissance − 2026) : le résultat est négatif, jamais égal à 25. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c11"
+C12,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C12,real,correct,1666490,1666490,correct
+C13,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C13,real,correct,107740,107740,correct
+C14,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C14,real,correct,0,0,correct
+C15,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C15,real,incorrect,314020,168680,"Une branche du OR accepte '2026-09-25' >= birth_date, donc tous les âges de 0 à 25 ans. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c15"
+C16,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C16,real,correct,376740,376740,correct
+C17,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C17,real,incorrect,371990,258180,Borne birth_date <= '2026-09-25' au lieu de <= '2001-09-25' : la requête accepte tous les âges de 0 à 25 ans. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c17
+C18,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C18,real,incorrect,62480,62480,"À vérifier : verdict calculé avec une ancienne référence (286650) ; la valeur 62480 égale la référence actuelle, cellule à re-noter. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c18"
+C19,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C19,real,incorrect,13930,1990,"Âge calculé par différence d'années 2026 − année de naissance, avec un test mois-jour sur de mauvaises positions SUBSTR. Voir notes/echecs-td1.md#openroutercoherenorth-mini-codefree--c19"
+C20,openrouter:cohere/north-mini-code:free,traces-C.csv,openrouter:cohere/north-mini-code:free:C20,real,correct,1106090,1106090,correct
+C01,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C01,real,correct,792800,792800,correct
+C02,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C02,real,correct,590320,590320,correct
+C03,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C03,real,correct,936350,936350,correct
+C04,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C04,real,correct,2826250,2826250,correct
+C05,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C05,real,correct,38480,38480,correct
+C06,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C06,real,correct,0,0,correct
+C07,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C07,real,correct,13970,13970,correct
+C08,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C08,real,correct,605580,605580,correct
+C09,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C09,real,incorrect,0,487980,"L'âge est calculé avec la date de commande (strftime('%Y', o.date)) au lieu de la date de référence 2026-09-26. Voir notes/echecs-td1.md#groqqwenqwen38-27b--c09"
+C10,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C10,real,incorrect,119410,558980,"Différence d'années : la branche = 24 devrait être = 26 avant l'anniversaire, des clients de 25 ans sont exclus. Voir notes/echecs-td1.md#groqqwenqwen38-27b--c10"
+C11,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C11,real,correct,446690,446690,correct
+C12,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C12,real,correct,1666490,1666490,correct
+C13,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C13,real,sql_rejected,,107740,"SQL rejeté : la réponse ouvre une balise ```sql sans la refermer, le texte ne commence donc pas par SELECT (pas de troncature, 107 tokens). Voir notes/echecs-td1.md#groqqwenqwen38-27b--c13"
+C14,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C14,real,correct,0,0,correct
+C15,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C15,real,incorrect,0,168680,"La condition ne compare que le mois et le jour de naissance, sans aucune contrainte d'année : l'âge n'est pas calculé. Voir notes/echecs-td1.md#groqqwenqwen38-27b--c15"
+C16,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C16,real,incorrect,367050,376740,"Jour anniversaire mal placé : né en 2001 avec mois-jour < '09-25' au lieu de <=, les clients nés le 2001-09-25 sont exclus. Voir notes/echecs-td1.md#groqqwenqwen38-27b--c16"
+C17,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C17,real,incorrect,248490,258180,"Jour anniversaire mal placé : né en 2001 avec mois-jour < '09-25' au lieu de <=, les clients nés le 2001-09-25 sont exclus. Voir notes/echecs-td1.md#groqqwenqwen38-27b--c17"
+C18,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C18,real,correct,62480,62480,correct
+C19,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C19,real,incorrect,83580,1990,"strftime('%Y', ...) <= '2026-09-25' compare une année à une date complète : le filtre d'âge ne filtre plus rien. Voir notes/echecs-td1.md#groqqwenqwen38-27b--c19"
+C20,groq:qwen/qwen3.8-27b,traces-D.csv,groq:qwen/qwen3.8-27b:C20,real,correct,1106090,1106090,correct
+C01,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C01,real,correct,792800,792800,correct
+C02,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C02,real,correct,590320,590320,correct
+C03,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C03,real,correct,936350,936350,correct
+C04,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C04,real,correct,2826250,2826250,correct
+C05,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C05,real,correct,38480,38480,correct
+C06,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C06,real,correct,0,0,correct
+C07,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C07,real,correct,13970,13970,correct
+C08,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C08,real,correct,605580,605580,correct
+C09,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C09,real,incorrect,47900,487980,Égalité stricte sur la date d'anniversaire : seuls les clients nés exactement le 2001-09-26 sont retenus. Voir notes/echecs-td1.md#openrouterdots-studiodots-3-note-previewfree--c09
+C10,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C10,real,incorrect,119410,558980,Différence d'années = 25 seulement : les clients de 25 ans nés l'année d'avant (différence 26 avant l'anniversaire) sont oubliés. Voir notes/echecs-td1.md#openrouterdots-studiodots-3-note-previewfree--c10
+C11,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C11,real,correct,446690,446690,correct
+C12,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C12,real,correct,1666490,1666490,correct
+C13,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C13,real,correct,107740,107740,correct
+C14,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C14,real,correct,0,0,correct
+C15,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C15,real,incorrect,51810,168680,"Année de naissance + 25 = 2026 : âge par différence d'années, et test mois-jour au format 'MMJJ' comparé à 'MM-JJ'. Voir notes/echecs-td1.md#openrouterdots-studiodots-3-note-previewfree--c15"
+C16,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C16,real,incorrect,1447730,376740,"Année de naissance + 25 < 2026 : âge par différence d'années, l'inégalité accepte aussi tous les clients plus âgés. Voir notes/echecs-td1.md#openrouterdots-studiodots-3-note-previewfree--c16"
+C17,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C17,real,incorrect,80190,258180,Égalité stricte AAAAMMJJ = référence − 25 ans : seuls les clients nés exactement le 2001-09-25 sont retenus. Voir notes/echecs-td1.md#openrouterdots-studiodots-3-note-previewfree--c17
+C18,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C18,real,incorrect,39580,62480,Différence d'années = 25 seulement : les clients de 25 ans nés l'année d'avant (différence 26 avant l'anniversaire) sont oubliés. Voir notes/echecs-td1.md#openrouterdots-studiodots-3-note-previewfree--c18
+C19,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C19,real,correct,1990,1990,correct
+C20,openrouter:dots-studio/dots-3-note-preview:free,traces-E.csv,openrouter:dots-studio/dots-3-note-preview:free:C20,real,correct,1106090,1106090,correct
