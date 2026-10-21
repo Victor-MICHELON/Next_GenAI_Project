@@ -532,6 +532,8 @@ def recap(latest: dict, questions: dict, failures: list) -> str:
 
 
 def main() -> int:
+    # La console Windows est en cp1252 : on force l'UTF-8 pour les accents et les flèches
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("traces", nargs="*", type=Path, help="fichiers de traces (.csv ou .jsonl), dans l'ordre chronologique")
     parser.add_argument("--out", type=Path, default=OUT)

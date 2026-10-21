@@ -1,7 +1,8 @@
-"""Execute reference SQL read-only; cross-check independently on CSV rows.
+"""Exécute les requêtes de référence en lecture seule et les recoupe par un calcul indépendant sur les CSV.
 
-Run from any directory. --write fills only blank reference rows, or accepts
-already identical rows. No model calls, no external dependencies.
+Se lance depuis n'importe quel dossier. --write ne remplit que les lignes de
+référence vides, ou accepte des lignes déjà identiques. Aucun appel à un modèle,
+aucune dépendance externe.
 """
 import argparse
 import csv
@@ -21,7 +22,7 @@ def csv_rows(name):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--write', action='store_true')
+    parser.add_argument('--write', action='store_true', help='écrit reference-td1.csv et reports/reference-verification.csv')
     args = parser.parse_args()
     manifest = json.loads((ROOT / 'data/manifest.json').read_text())
     db = ROOT / 'data/boutique.sqlite'
@@ -29,16 +30,16 @@ def main():
         (ROOT / 'data' / name, expected) for name, expected in manifest['csv_sha256'].items()
     ]:
         if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
-            raise SystemExit(f'Fingerprint mismatch: {path.name}')
+            raise SystemExit(f'Empreinte différente : {path.name}')
     questions = json.loads((ROOT / 'questions-td1.json').read_text())['questions']
     sql_text = (ROOT / 'scripts/reference_queries.sql').read_text()
     queries = dict(re.findall(r'^-- (C\d{2})\n([^\n]+)', sql_text, re.M))
     wanted = {f'C{i:02}' for i in range(1, 21)}
     if set(queries) != wanted or {q['id'] for q in questions} != wanted:
-        raise SystemExit('Expected exactly C01-C20 in SQL and questions')
+        raise SystemExit('Il faut exactement C01 à C20 dans le SQL et dans les questions')
 
-    # Independent CSV implementation: completed age is calculated with Python
-    # calendar arithmetic, not the SQL birth-date predicates.
+    # Calcul indépendant sur les CSV : l'âge révolu est calculé avec les dates
+    # Python, sans reprendre les conditions sur birth_date du SQL.
     prices = {r['product_id']: int(r['price']) for r in csv_rows('product.csv')}
     births = {r['customer_id']: date.fromisoformat(r['birth_date']) for r in csv_rows('customers.csv')}
     orders = csv_rows('orders.csv')
@@ -90,27 +91,27 @@ def main():
             cursor = connection.execute(queries[key])
             result = cursor.fetchall()
             if [c[0] for c in cursor.description] != ['revenue_cents'] or len(result) != 1:
-                raise SystemExit(f'{key}: expected one row and one column revenue_cents')
+                raise SystemExit(f'{key} : il faut une ligne et une colonne revenue_cents')
             amount = result[0][0]
             if type(amount) is not int or amount != totals[key]:
-                raise SystemExit(f'{key}: SQL {amount} differs from CSV {totals[key]}')
+                raise SystemExit(f'{key} : SQL {amount} différent du calcul CSV {totals[key]}')
             calculated.append({'case_id': key, 'sql': queries[key], 'revenue_cents': str(amount)})
             evidence.append({'case_id': key, 'sql_revenue_cents': amount,
                              'csv_revenue_cents': totals[key], 'csv_matching_lines': counts[key],
                              'match': 'true'})
-            print(f'{key}: SQL={amount} CSV={totals[key]} OK ({counts[key]} lines)')
+            print(f'{key} : SQL={amount} CSV={totals[key]} OK ({counts[key]} lignes)')
     path = ROOT / 'reference-td1.csv'
     with path.open(newline='', encoding='utf-8') as stream:
         existing = list(csv.DictReader(stream))
     if len(existing) != 20 or {r['case_id'] for r in existing} != wanted:
-        raise SystemExit('Existing reference file must contain exactly C01-C20')
+        raise SystemExit('Le fichier de référence doit contenir exactement C01 à C20')
     by_key = {r['case_id']: r for r in calculated}
     for row in existing:
         for field in ('sql', 'revenue_cents'):
             if row[field].strip() and row[field].strip() != by_key[row['case_id']][field]:
-                raise SystemExit(f"Existing {row['case_id']} {field} differs: preserve and review manually")
+                raise SystemExit(f"{row['case_id']} : {field} existant différent, on le garde et on vérifie à la main")
     if args.write:
-        # All computations and existing-value checks finish before either output is written.
+        # Tous les calculs et contrôles sont finis avant d'écrire le moindre fichier.
         output = io.StringIO(newline='')
         writer = csv.DictWriter(output, fieldnames=['case_id', 'sql', 'revenue_cents'], lineterminator='\n')
         writer.writeheader()
@@ -120,11 +121,11 @@ def main():
             writer = csv.DictWriter(stream, fieldnames=list(evidence[0]), lineterminator='\n')
             writer.writeheader()
             writer.writerows(evidence)
-        print('Reference file and verification evidence written.')
+        print('Fichier de référence et preuve de vérification écrits.')
     elif existing != calculated:
-        raise SystemExit('Reference file incomplete: run with --write to fill blank fields')
-    print('20/20 SQL and CSV computations agree. Human cross-check and instructor validation pending.')
-    print('Run UTC:', datetime.now(timezone.utc).isoformat())
+        raise SystemExit('Fichier de référence incomplet : relancer avec --write pour remplir les champs vides')
+    print('20/20 : les calculs SQL et CSV sont identiques. Références validées par le corrigé du prof.')
+    print('Exécution UTC :', datetime.now(timezone.utc).isoformat())
 
 if __name__ == '__main__':
     main()

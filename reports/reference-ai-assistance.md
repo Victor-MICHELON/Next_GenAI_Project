@@ -1,19 +1,14 @@
-# AI assistance — reference calculation
+# Aide d'IA - calcul des références (deuxième calcul)
 
-Assistant: Codex. Date: 21 October 2026. Authoring context: Bertrand's branch.
+Assistant : Codex. Date : 21 octobre 2026. Contexte : branche de Bertrand.
 
-## User request, verbatim
+## Demande faite à l'assistant, mot pour mot
 
 > Changement de plan. On fait les 20 quetsions ensuite on push
 > Etnsuite on passera au role A
 
-## Method and decisions
+## Méthode et décisions
 
-Read the supplied schema, protocol and all twenty questions. Wrote SQLite
-SELECT queries, executed them read-only and independently recalculated each
-amount by iterating over the distributed CSV data with Python. Preserved the
-three-column reference format expected by the skeleton. Retained scripts,
-computed evidence, and the outstanding human/instructor validation status.
-No model API was called and no response from a model under evaluation was used.
-No human cross-check is claimed. Students remain responsible for reviewing and
-explaining the assisted code and the interpretation of the questions.
+On a relu le schéma, le protocole et les vingt questions. L'assistant a aidé à écrire les requêtes SQLite `SELECT`, qu'on a exécutées en lecture seule. Chaque montant a été recalculé à part en Python, en parcourant les CSV fournis. On a gardé le format à trois colonnes que le squelette attend pour `reference-td1.csv`, ainsi que les scripts et la preuve de calcul (`reports/reference-verification.csv`).
+
+Aucune API de modèle n'a été appelée, et aucune réponse d'un modèle évalué n'a été utilisée. Le groupe a relu le code et l'interprétation des questions, et reste responsable de leur explication. Les vingt valeurs ont ensuite été validées par le corrigé du prof.

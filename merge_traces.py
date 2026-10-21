@@ -40,6 +40,8 @@ def fichiers_sources() -> list[Path]:
 
 
 def main() -> int:
+    # La console Windows est en cp1252 : on force l'UTF-8 pour les accents et les flèches
+    sys.stdout.reconfigure(encoding="utf-8")
     colonnes = colonnes_trace()
     sources = fichiers_sources()
     if not sources:

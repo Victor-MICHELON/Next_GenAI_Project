@@ -161,6 +161,8 @@ le score sur les seules cellules évaluées est donné entre parenthèses.</p>
 
 
 def main() -> int:
+    # La console Windows est en cp1252 : on force l'UTF-8 pour les accents et les flèches
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--csv", type=Path, default=HERE / "model-question-comparison-en.csv")
     parser.add_argument("--md", type=Path, default=HERE / "pivot-td1.md")

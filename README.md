@@ -1,66 +1,32 @@
-# Lab kit, Trustworthy generative AI, ESILV
+# IA générative de confiance - TD ESILV, sous-groupe
 
-> Final. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+Dépôt de notre sous-groupe pour les trois TD du module « Trustworthy generative AI » (ESILV, A4) : TD 1 le 21 octobre, TD 2 le 18 novembre et TD 3 le 11 décembre 2026. Il part du kit `kit-td1` du 14 octobre 2026. La base et les vingt questions sont les mêmes pour tous les sous-groupes.
 
-Kit of 14 October 2026 for the three sessions of 21 October, 18 November and
-11 December. The database and the twenty questions are the same for every
-sub-group. Read the environment guide first and finish preparation by 18 October inclusive; each assignment gives the schedule of its afternoon.
+Les documents fournis par le prof (énoncés, consigne, guide, portefeuille, méthode de coût) restent dans leur version d'origine en anglais. Tout ce qu'on a produit est en français.
 
-## Before the first session
+## Membres
 
-| Member | GitHub | Main contributions |
+| Membre | GitHub | Contributions principales (TD 1) |
 |---|---|---|
-| Victor Michelon | `<TODO>` | `<TODO>` |
-| Bertrand Maigre | `<TODO>` | `<TODO>` |
-| Jean-Baptiste Pasteau | `<TODO>` | `<TODO>` |
-| Oscar Dujardin | `<TODO>` | `<TODO>` |
-| Cyprien Avnel | `<TODO>` | `<TODO>` |
-| Héloïse Moynot | `<TODO>` | `<TODO>` |
+| Victor Michelon | `Victor-MICHELON` | Création du dépôt ; opérateur B : lot `groq:openai/gpt-oss-20b` (`traces-B.csv`, `state-B.jsonl`) |
+| Bertrand Maigre | `BertrandM78` | Opérateur A : lot `groq:openai/gpt-oss-120b` et [reports/role-A-run.md](reports/role-A-run.md) ; deuxième calcul des références (`scripts/`) ; analyse des échecs (`analyze_failures.py`, `notes/echecs-td1.md`), `model-question-comparison-en.csv` et tableau croisé (`pivot.py`) |
+| Jean-Baptiste Pasteau | - | Références C01 à C20 (`compute_references.py`) ; fusion des traces (`merge_traces.py`) ; résumé des cinq modèles (`fill_summary.py`) ; prompt, README et [reports/td1.md](reports/td1.md) |
+| Oscar Dujardin | `OscarDjr` | Opérateur D : lot `groq:qwen/qwen3.8-27b` (`traces-D.csv`, `state-D.jsonl`) ; tableau des membres et nettoyage du dépôt |
+| Cyprien Avnel | `cyp44avenel-droid` | Opérateur C : lot `openrouter:cohere/north-mini-code:free` (`traces-C.csv`, `state-C.jsonl`) |
+| Héloïse Moynot | - | Opératrice E : lot `openrouter:dots-studio/dots-3-note-preview:free` (`traces-E.csv`, `state-E.jsonl`) et premières causes d'échec (`model-question-comparison-E.csv`) |
 
+Le partage du travail est détaillé dans le compte rendu de chaque TD.
 
-The per-member split of work is detailed in each session report and in `contributions` tables where applicable.
+## Environnement
 
-## Course pack and environment
+- Pack de cours : `2026-10-14-students-1` (14 octobre 2026).
+- Python 3.10 ou plus, uniquement la bibliothèque standard, dans un environnement virtuel local (`.venv/`, non versionné).
+- Base : `data/boutique.sqlite`, jamais modifiée. SHA-256 `0077e235adc2ca647b484e3083c98a6d7cae3ef3655ce366a299caf13398fec2`, identique à `data/manifest.json`. Contenu : 5 produits, 59 clients, 397 lignes de commande.
+- Modèles autorisés (`modeles-autorises.json`) : `openai/gpt-oss-120b`, `openai/gpt-oss-20b` et `qwen/qwen3.8-27b` sur Groq, `cohere/north-mini-code:free` et `dots-studio/dots-3-note-preview:free` sur OpenRouter.
 
-- **Course pack:** `2026-10-14-students-1` (14 October 2026). Reference site: <https://storage.googleapis.com/docs.g.quanticfactory.io/ESILV/next-generation-ai/latest/index.html>
-- **Sessions:** TD 1 (21 October 2026), TD 2 (18 November 2026), TD 3 (11 December 2026).
-- **Python:** 3.14.0 (3.10 or later required), in a local virtual environment (`.venv/`, not versioned).
-- **SQLite:** 3.50.4 (Python's `sqlite3` module).
-- **Database:** `data/boutique.sqlite`, never modified. SHA-256 `0077e235adc2ca647b484e3083c98a6d7cae3ef3655ce366a299caf13398fec2` (seed 20260925), identical to `data/manifest.json`. Content: 5 products, 59 customers, 397 order lines.
-- **Authorised models** (see `modeles-autorises.json`): `groq/openai/gpt-oss-120b`, `groq/openai/gpt-oss-20b`, `groq/qwen/qwen3.8-27b`, `openrouter/cohere/north-mini-code:free`, `openrouter/dots-studio/dots-3-note-preview:free`.
-- **Secrets:** `GROQ_API_KEY` and `OPENROUTER_API_KEY` are read from environment variables only. No key or `.env` file is committed (see `.gitignore`).
+## Les clés API
 
-## Reproducing our work
-
-From a fresh clone:
-
-```bash
-python3 -m venv .venv && source .venv/bin/activate
-
-export GROQ_API_KEY="..."            # your own key, never committed
-export OPENROUTER_API_KEY="..."
-
-python3 verify-data.py               # database integrity against data/manifest.json
-python3 check_access.py              # Python, database hash, one probe per authorised model
-python3 skeleton-multi-llm-en.py --demo   # whole chain on simulated models, no key, no network
-python3 atelier-routage.py           # TD 2 routing scenarios, no network
-```
-
-Real TD 1 runs use `--models` / `--cases` as described in `enonce-td1-en.md` and `consigne-etudiante-en.md`:
-
-```bash
-# Member A (Bertrand), 21 October 2026: see reports/role-A-run.md
-python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-120b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-A.jsonl --out traces-A.csv
-# Members B-E: see the French section "Rejouer le TD 1" below
-```
-
-## Rejouer le TD 1
-
-Toutes les commandes se lancent à la racine du dépôt, avec Python 3.10 ou plus et seulement la bibliothèque standard. Sous Windows, on remplace `python3` par `python`.
-
-### Les clés API
-
-Les clés se mettent dans des variables d'environnement, sur sa propre machine. Elles ne vont jamais dans le dépôt : ni dans un fichier, ni dans un notebook, ni dans un commit. Le `.gitignore` exclut déjà les fichiers `.env`.
+Les clés se mettent dans des variables d'environnement, sur sa propre machine. Elles ne vont jamais dans le dépôt : ni dans un fichier, ni dans un notebook, ni dans un commit. Le `.gitignore` exclut les fichiers `.env`, `.venv/`, `__pycache__/` et `.idea/`.
 
 ```bash
 # Linux, macOS
@@ -74,11 +40,14 @@ $env:GROQ_API_KEY = "..."
 $env:OPENROUTER_API_KEY = "..."
 ```
 
-Seules les étapes 1 (sans `--no-network`) et 3 ont besoin des clés et du réseau. Les autres travaillent sur les fichiers du dépôt.
+## Rejouer le TD 1
+
+Toutes les commandes se lancent à la racine du dépôt. Sous Windows, on remplace `python3` par `python`. Seules les étapes 1 (sans `--no-network`) et 3 ont besoin des clés et du réseau. Les autres travaillent sur les fichiers du dépôt.
 
 ### 1. Vérifier l'accès
 
 ```bash
+python3 verify-data.py                 # intégrité de la base et des CSV
 python3 check_access.py --no-network   # intégrité locale seulement : Python, hash de la base
 python3 check_access.py                # + un appel par modèle autorisé (3 Groq, 2 OpenRouter)
 ```
@@ -89,6 +58,8 @@ python3 check_access.py                # + un appel par modèle autorisé (3 Gro
 python3 compute_references.py --dry-run   # calcule et compare SQL / Python sans rien écrire
 python3 compute_references.py             # écrit reference-td1.csv si les deux calculs sont d'accord
 ```
+
+Les vingt valeurs de `reference-td1.csv` ont été validées par le corrigé du prof. La méthode et les conventions sont dans [reports/reference-method.md](reports/reference-method.md).
 
 ### 3. Les cinq lots, un par opérateur
 
@@ -108,6 +79,8 @@ python3 skeleton-multi-llm-en.py --run --models openrouter:dots-studio/dots-3-no
 ```
 
 Attention : les fichiers `state-*.jsonl` du dépôt contiennent déjà nos 100 cellules vérifiées. Relancer ces commandes telles quelles ne fait aucun appel, parce que le squelette saute les cellules déjà vérifiées. Pour refaire une vraie expérience, il faut de nouveaux noms pour `--state` et `--out` : ça consomme du quota, et on garde nos fichiers d'origine.
+
+Sans réseau, on peut tester toute la chaîne sur des modèles simulés avec `python3 skeleton-multi-llm-en.py --demo`. Les lignes produites sont en `simulation` et n'entrent dans aucun score.
 
 ### 4. Fusionner les traces
 
@@ -133,7 +106,18 @@ python3 pivot.py
 
 Le script lit `model-question-comparison-en.csv` et écrit `pivot-td1.md` et `pivot-td1.html`.
 
-### 7. Taux par modèle
+### 7. Résumé des cinq modèles
+
+```bash
+python3 fill_summary.py
+```
+
+Le script remplit `five-model-summary-en.csv` :
+- l'index public vient du portefeuille du 28/09/2026 ;
+- les prix d'une route payante du même modèle viennent de `methode-cout-en.md`, étape 2 ;
+- les résultats par famille sont lus dans `traces-td1.csv`.
+
+### 8. Taux par modèle
 
 Le squelette lit les taux dans un fichier d'état JSONL, donc on lance la commande une fois par opérateur :
 
@@ -145,11 +129,12 @@ python3 skeleton-multi-llm-en.py --rates --state state-D.jsonl
 python3 skeleton-multi-llm-en.py --rates --state state-E.jsonl
 ```
 
-### Où sont les résultats
+## Où sont les résultats du TD 1
 
 | Fichier | Contenu |
 |---|---|
-| `reference-td1.csv` | Les 20 requêtes de référence et leur valeur |
+| [reports/td1.md](reports/td1.md) | Le compte rendu du TD 1 |
+| `reference-td1.csv` | Les 20 requêtes de référence et leur valeur, validées par le prof |
 | `traces-A.csv` ... `traces-E.csv`, `state-A.jsonl` ... `state-E.jsonl` | Traces brutes de chaque opérateur, une ligne par appel |
 | `traces-td1.csv` | Fusion des 100 lignes `real` |
 | `traces-demo.csv`, `traces-demo.jsonl` | Lignes `simulation` du mode `--demo`, hors de tout score |
@@ -157,98 +142,34 @@ python3 skeleton-multi-llm-en.py --rates --state state-E.jsonl
 | `pivot-td1.md`, `pivot-td1.html` | Le tableau croisé modèles x questions |
 | `notes/echecs-td1.md` | L'analyse des 23 cellules ratées |
 | `five-model-summary-en.csv` | Le résumé des 5 modèles : index, prix, accès, résultats par famille |
-| `prompts/prompt-experience-td1.md` | Le prompt utilisé, tel quel |
-| `reports/td1.md` | Le compte rendu du TD 1 |
+| [prompts/prompt-experience-td1.md](prompts/prompt-experience-td1.md) | Le prompt utilisé, tel quel, identique pour les 5 modèles |
+| `reports/role-A-run.md`, `reports/reference-method.md` | Détail du lot A et de la méthode des références |
 
-## Repository layout
+## Nos scripts
 
-| File | Role |
+| Fichier | Rôle |
 |---|---|
-| [guide-environnement-etudiant-en](guide-environnement-etudiant-en.html) | Install Python, create the two free accounts and the keys, then run `check_access.py`. |
-| `check_access.py` | Checks your Python version, the hash of the database and the access to every authorised model; one OK or KO per line. |
-| `modeles-autorises.json` | The authorised models: exact identifiers, call parameters and batch limits, read by `check_access.py` and by the skeleton. |
-| `.gitignore` | Keeps environment files, keys, virtual environments and caches out of your public repository. Keep it at the root of the repository. |
+| `compute_references.py` | Calcule les 20 références en SQL et les recalcule en Python sur les CSV |
+| `scripts/reference_queries.sql`, `scripts/verify_references.py` | Deuxième calcul des références, fait de son côté |
+| `merge_traces.py` | Fusionne les traces des opérateurs et fait les contrôles |
+| `analyze_failures.py` | Propose une cause par cellule ratée |
+| `pivot.py` | Construit le tableau croisé |
+| `fill_summary.py` | Remplit le résumé des cinq modèles |
 
-## The three assignments
+L'utilisation d'outils d'IA pour écrire ces scripts est décrite dans la section 7 de [reports/td1.md](reports/td1.md).
 
-| File | Role |
+## Fichiers du kit
+
+| Fichier | Rôle |
 |---|---|
-| [enonce-td1-en](enonce-td1-en.html) | TD 1: compare the authorised models on the same twenty questions. |
-| [enonce-td2-en](enonce-td2-en.html) | TD 2: the k-of-n vote, then the routing rule of your sub-group. |
-| [enonce-td3-en](enonce-td3-en.html) | TD 3: quantify each configuration, choose one for a named use case, present it. |
-| [consigne-etudiante-en](consigne-etudiante-en.html) | The protocol: task, schema, conventions, accounts, call rules, models, calls planned, offline fallback, hand-in, the twenty questions. |
-
-## The case
-
-| File | Role |
-|---|---|
-| `data/boutique.sqlite` | The database, identical for every sub-group. Never modify it. |
-| `data/product.csv`, `data/customers.csv`, `data/orders.csv` | The same data as CSV files, for a spreadsheet or a check by hand. |
-| `data/manifest.json` | SHA-256 hashes of the database and of the CSV files, row counts, integrity checks. |
-| `schema.sql` | The three tables, sent to the models in the prompt. |
-| [questions-td1-en](questions-td1-en.html) | The twenty questions, without answers. |
-| `questions-td1.json` | The same questions, read by the skeleton. |
-| `reference-td1.csv` | Template of step 1 of TD 1: your reference query and its value for each question. |
-
-## The code
-
-AI-assisted coding is used. The prompts are kept in `prompts-en.md` as they were used, and decisions are explained in the reports.
-
-## TD1 reference calculation (Bertrand)
-
-`reference-td1.csv` contains the twenty SQL queries and their computed amounts.
-On 21 October 2026, all twenty SQLite results agreed with a separate computation
-on the supplied CSV files. To reproduce, from the repository root:
-
-```fish
-python3 scripts/verify_references.py
-```
-
-See `reports/reference-method.md` for conventions, contribution and limitations,
-and `reports/reference-verification.csv` for the per-case comparison.
-The calculation itself made no model call. Before the role A batch, the operator
-confirmed that the references had been cross-checked and validated; the twenty
-values also match the separate computation on `main` (`c398d9b`).
-Role A results (20/20 correct): `reports/role-A-run.md`.
-
-| File | Role |
-|---|---|
-| `skeleton-multi-llm-en.py` | The orchestrator skeleton: prompt, clients, sandboxed execution, verdict, trace table, rates. The k-of-n vote is yours to write in TD 2. |
-| `sandbox_sqlite.py` | Read-only SQLite sandbox, used by the skeleton for every query a model returns. |
-| `atelier-vote.py` | Runs your vote on four synthetic examples, then on the stored traces of one question. No network. |
-| `atelier-routage.py` | Reads the decisions of a routing rule on seven scenarios with synthetic resources, then you adapt it to your own rule. No network. |
-
-## Reading a portfolio and a cost
-
-| File | Role |
-|---|---|
-| [portefeuille-modeles-en](portefeuille-modeles-en.html) | Sixty model and access pairs in five capability groups, with public index, prices and access routes. |
-| `portefeuille-modeles-2026-09-28.csv` | The same table as a CSV file, for a spreadsheet. |
-| [methode-cout-en](methode-cout-en.html) | The step-by-step method: read the tokens of a trace, choose a dated price, compute one call, one configuration, then an annual bill. |
-
-## TD 1 summaries
-
-| File | Role |
-|---|---|
-| `model-question-comparison-en.csv` | One final result per model/question, verdict, explanation and raw-trace pointer; display its pivot matrix. |
-| `five-model-summary-en.csv` | Five models, documented index and prices, access and results by family. |
-| [comparison-example-en](comparison-example-en.html) | Column definitions and a fictional presentation example, unrelated to lab answers. |
-
-## Inventory
-
-| File | Role |
-|---|---|
-| `manifest.json` | SHA-256 hash of every file of this kit. |
-
-## Start
-
-```bash
-cd kit-td1
-python3 check_access.py                       # Python, database hash, one probe per authorised model
-python3 skeleton-multi-llm-en.py --demo       # the whole chain on three simulated models, no key, no network
-python3 atelier-routage.py                    # the seven routing scenarios, no network
-```
-
-Then step 1 of [enonce-td1-en](enonce-td1-en.html): fill in `reference-td1.csv`. Step 2 uses the allocation and `--models` / `--cases` commands in the assignment. The base batch is 100 cells (60 Groq, 40 OpenRouter); controls and retries are separate, with at most one retry per cell. Each operator checks their own allowance. Keep the CSV and JSONL attempts.
-
-The assessment sheet, the hand-in page and the hand-in templates are one folder above this runnable kit. [Before TD 1](../before-td1-en.html) gives the preparation steps to follow before the first session.
+| `enonce-td1-en.md`, `enonce-td2-en.md`, `enonce-td3-en.md` | Les énoncés des trois TD |
+| `consigne-etudiante-en.md` | Le protocole : tâche, schéma, conventions, comptes, règles d'appel, modèles, rendu, les vingt questions |
+| `guide-environnement-etudiant-en.md` | Installer Python, créer les comptes et les clés, lancer `check_access.py` |
+| `questions-td1-en.md`, `questions-td1.json` | Les vingt questions, sans réponses |
+| `skeleton-multi-llm-en.py`, `sandbox_sqlite.py` | L'orchestrateur et son bac à sable SQLite en lecture seule |
+| `check_access.py`, `verify-data.py`, `modeles-autorises.json` | Vérification de l'environnement et liste des modèles autorisés |
+| `portefeuille-modeles-en.md`, `portefeuille-modeles-2026-09-28.csv` | Les soixante couples modèle/accès avec index public et prix |
+| `methode-cout-en.md` | La méthode de calcul du coût et les prix de référence |
+| `atelier-vote.py`, `atelier-routage.py` | Ateliers du TD 2 : vote k-sur-n et routage, sans réseau |
+| `comparison-example-en.md` | Définition des colonnes des deux résumés et exemple fictif |
+| `data/`, `schema.sql`, `manifest.json` | La base, ses CSV, le schéma et les empreintes SHA-256 du kit |

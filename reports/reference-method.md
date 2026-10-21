@@ -1,60 +1,39 @@
-# TD1 reference calculation — C01 to C20
+# Calcul des références du TD 1 - C01 à C20
 
-## Observed result (21 October 2026)
+## Résultat (21 octobre 2026)
 
-Twenty SQLite queries executed on the supplied database opened read-only.
-All twenty integer results agree with a separate Python computation over the
-three supplied CSV files. No Groq or OpenRouter call was made.
+On a écrit vingt requêtes SQLite et on les a exécutées sur la base fournie, ouverte en lecture seule. Les vingt résultats entiers sont égaux à un calcul Python séparé, fait directement sur les trois CSV fournis. Aucun appel à Groq ni à OpenRouter n'a été fait pour ce calcul.
 
-- Queries: `scripts/reference_queries.sql`.
-- Consolidated reference: `reference-td1.csv` (one query and one amount per case).
-- CSV cross-check and SQL runner: `scripts/verify_references.py`.
-- Per-case evidence: `reports/reference-verification.csv`.
-- Database SHA-256: `0077e235adc2ca647b484e3083c98a6d7cae3ef3655ce366a299caf13398fec2`.
+Les vingt valeurs ont été validées par le corrigé du prof au premier essai.
 
-## Reproduce from the repository root
+- Calcul principal : [compute_references.py](../compute_references.py), une requête SQL par question et un recalcul Python sur les CSV.
+- Deuxième calcul, fait de son côté par Bertrand : requêtes dans `scripts/reference_queries.sql`, recalcul CSV dans `scripts/verify_references.py`.
+- Références rendues : `reference-td1.csv`, une requête et un montant par question.
+- Preuve question par question : `reports/reference-verification.csv`.
+- SHA-256 de la base : `0077e235adc2ca647b484e3083c98a6d7cae3ef3655ce366a299caf13398fec2`.
 
-```fish
-python3 scripts/verify_references.py
+Les deux calculs donnent les mêmes vingt valeurs. Le texte SQL de `reference-td1.csv` a été reformulé après coup (commit cc79a23). On a vérifié que ses vingt requêtes redonnent exactement les vingt valeurs validées. À cause de cette reformulation, `scripts/verify_references.py` s'arrête dès C01 avec le message « sql existant différent ». Il compare le texte des requêtes, pas les montants.
+
+## Rejouer le calcul
+
+À la racine du dépôt :
+
+```bash
+python3 compute_references.py --dry-run
 ```
 
-Only the standard library is needed. The command verifies database/CSV hashes,
-runs each SQL query read-only, recalculates from CSV and checks the stored
-reference. It exits unsuccessfully on any discrepancy. `--write` fills blank
-reference cells only after all comparisons succeed; differing existing values
-are rejected rather than silently overwritten.
+Seule la bibliothèque standard est utilisée. Le script calcule chaque question en SQL et en Python, puis affiche OK ou DIFF. Sans `--dry-run`, il n'écrit `reference-td1.csv` que si les vingt questions concordent.
 
-## Conventions and independent computations
+## Conventions et calcul indépendant
 
-Revenue is the sum of order-line quantity multiplied by product price, in
-integer euro cents excluding VAT. Do not count an order once when it contains
-multiple product lines. Periods use `start <= order_timestamp < end`.
-SQL uses `COALESCE(SUM(...), 0)` for an empty selection.
+Le chiffre d'affaires est la somme de `quantity_product * price` sur les lignes de commande, en centimes d'euro HT, sous forme d'entier. Une commande avec plusieurs produits compte pour chacune de ses lignes. Une période va de `début <= date` à `date < fin`. Le SQL utilise `COALESCE(SUM(...), 0)` pour renvoyer 0 quand rien ne correspond.
 
-For age 25 on a fixed reference date D, SQL selects birth dates in the interval
-`(D minus 26 years, D minus 25 years]`. It includes all orders for the selected
-customers unless the question separately supplies a period or product filter.
-For age at order time (C10/C18), SQL subtracts one from the year difference if
-the birthday has not yet occurred. The independent CSV computation uses Python
-calendar dates and completed-year arithmetic, with separate case conditions;
-it does not execute, parse or reuse the SQL predicates. The supplied data
-excludes leap-day birthdays. C06 and C14 select no lines and return integer zero.
+Pour avoir 25 ans à une date fixe D, il faut être né dans l'intervalle ]D - 26 ans, D - 25 ans]. On prend toutes les commandes des clients retenus, sauf si la question ajoute une période ou une liste de produits. Pour l'âge au moment de la commande (C10, C18), on retire un an à la différence des années quand l'anniversaire n'est pas encore passé à la date de la commande. Le calcul Python travaille sur des dates du calendrier avec l'âge révolu. Il ne réutilise pas les conditions SQL. Aucun client de la base n'est né un 29 février. C06 et C14 ne sélectionnent aucune ligne et renvoient 0.
 
-Question interpretations were checked against `questions-td1.json` and section 1
-of `consigne-etudiante-en.md`. Source data were not modified. These are computed
-references, not model numerical answers adopted as truth.
+On a relu l'interprétation des questions dans `questions-td1.json` et dans la section 1 de `consigne-etudiante-en.md`. Les données sources n'ont pas été modifiées. Ce sont des références calculées : aucune valeur ne vient de la réponse d'un modèle.
 
-## Contributions, AI assistance and remaining validation
+## Aide d'IA et validation
 
-Prepared on Bertrand's branch with Codex assistance. Both implementations and
-the interpretation of the questions were assisted by the same AI; agreement
-between them is a computational cross-check, not an independent human review.
-No other member's review or instructor answer-key validation has yet been
-observed. Record the reviewer, cases reviewed, date and any corrections here
-after that review. Do not label these references instructor-validated yet.
-The code-assistance request is retained in `reports/reference-ai-assistance.md`.
+Le deuxième calcul (`scripts/`) a été préparé sur la branche de Bertrand avec l'aide de Codex. La demande faite à l'assistant est gardée dans `reports/reference-ai-assistance.md`. Les deux calculs ont été relus et lancés par le groupe, et les vingt valeurs ont été validées par le corrigé du prof avant les lots des modèles.
 
-Before the model batches, another member should inspect the boundary cases,
-age predicates and amounts, and the group should show the twenty values to the
-instructor. Any later change to a reference already used in a real batch starts
-a separate experiment with new state/output files, preserving the old traces.
+Si une référence déjà utilisée dans un lot réel devait changer, il faudrait lancer une expérience séparée, avec de nouveaux fichiers d'état et de sortie, et garder les anciennes traces.

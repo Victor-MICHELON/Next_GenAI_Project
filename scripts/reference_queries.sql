@@ -1,6 +1,6 @@
--- Reference queries C01-C20. Revenue is an integer in euro cents excluding VAT.
--- Periods include the lower bound and exclude the upper bound.
--- Birth-date interval for age 25 at date D: (D - 26 years, D - 25 years].
+-- Requêtes de référence C01 à C20. Le chiffre d'affaires est un entier en centimes d'euro HT.
+-- Les périodes incluent la borne de début et excluent la borne de fin.
+-- Intervalle de naissance pour avoir 25 ans le jour D : ]D - 26 ans, D - 25 ans].
 -- C01
 SELECT COALESCE(SUM(o.quantity_product * p.price), 0) AS revenue_cents FROM orders o JOIN product p USING(product_id) WHERE o.date >= '2026-03-01 00:00:00' AND o.date < '2026-06-01 00:00:00';
 -- C02

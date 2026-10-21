@@ -77,21 +77,21 @@ Les deux échecs qui ne viennent pas de l'âge :
   - les 60 lignes de [traces-demo.csv](../traces-demo.csv) sont `simulation`, elles restent dans un fichier à part et n'entrent dans aucun score.
 - Trace C, cellule C18 : elle a d'abord été notée `incorrect` contre une référence erronée (286650). Le modèle renvoyait 62480, la valeur de la référence validée. La ligne a été re-notée dans `traces-C.csv` et `state-C.jsonl` (commit 33a097d), sans nouvel appel. La valeur d'origine reste dans l'historique git.
 - Index publics et prix :
-  - Cohere et Dots sont absents du portefeuille du 28/09/2026, donc leur index et leur prix sont N/A.
-  - Pour gpt-oss-20b et Qwen, le portefeuille ne documente que la route gratuite Groq, donc leur prix est N/A dans le résumé.
+  - Les prix du résumé viennent de l'étape 2 de `methode-cout-en.md` : route Groq Developer vérifiée le 05/10/2026 pour les trois modèles Groq.
+  - Cohere et Dots sont absents du portefeuille du 28/09/2026, donc leur index public est N/A. Leur prix est aussi N/A : `methode-cout-en.md` ne documente aucune route payante du même modèle exact.
 
 ## 6. Contributions
 
+On était six pour huit rôles, donc les rôles F à H (contrôle des références, fusion des traces, résumés) ont été partagés entre Jean-Baptiste et Bertrand.
+
 | Membre | Rôle | Ce qu'il a fait |
 |---|---|---|
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
-| [NOM] | [RÔLE A-H] | [CE QU'IL A FAIT] |
+| Bertrand Maigre | A, puis F-H | Lot `groq:openai/gpt-oss-120b` (20/20) et [role-A-run.md](role-A-run.md) ; deuxième calcul des références ; analyse des échecs ([analyze_failures.py](../analyze_failures.py), [notes/echecs-td1.md](../notes/echecs-td1.md)), `model-question-comparison-en.csv` et tableau croisé ; re-notation de la cellule Cohere C18 |
+| Victor Michelon | B | Création du dépôt ; lot `groq:openai/gpt-oss-20b` ([traces-B.csv](../traces-B.csv)) |
+| Cyprien Avnel | C | Lot `openrouter:cohere/north-mini-code:free` ([traces-C.csv](../traces-C.csv)) |
+| Oscar Dujardin | D | Lot `groq:qwen/qwen3.8-27b` ([traces-D.csv](../traces-D.csv)) ; tableau des membres et nettoyage du dépôt |
+| Héloïse Moynot | E | Lot `openrouter:dots-studio/dots-3-note-preview:free` ([traces-E.csv](../traces-E.csv)) et premières causes d'échec ([model-question-comparison-E.csv](../model-question-comparison-E.csv)) |
+| Jean-Baptiste Pasteau | F-H | Calcul des 20 références ([compute_references.py](../compute_references.py)) ; fusion des traces ([merge_traces.py](../merge_traces.py)) ; résumé des cinq modèles ([fill_summary.py](../fill_summary.py)) ; prompt, README et ce compte rendu |
 
 ## 7. Utilisation d'outils d'IA
 

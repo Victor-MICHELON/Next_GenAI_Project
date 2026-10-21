@@ -3,8 +3,10 @@
 
 Sources utilisées, et rien d'autre :
 - modeles-autorises.json : les cinq modèles requis, leurs paramètres et l'opérateur ;
-- portefeuille-modeles-2026-09-28.csv (+ portefeuille-modeles-en.md pour les dates) :
-  index public et prix d'une route payante du même identifiant exact ;
+- portefeuille-modeles-2026-09-28.csv (+ portefeuille-modeles-en.md pour la date) :
+  index public du même identifiant exact ;
+- methode-cout-en.md, étape 2 : prix de la route payante de référence de chaque modèle
+  du kit (prix Groq vérifiés le 05/10/2026), ou N/A avec la raison donnée par le kit ;
 - traces-td1.csv (sortie de merge_traces.py) et reference-td1.csv : résultats ;
 - questions-td1.json : famille de chaque question.
 
@@ -17,6 +19,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -25,10 +28,11 @@ ICI = Path(__file__).resolve().parent
 RESUME = ICI / "five-model-summary-en.csv"
 PORTEFEUILLE = ICI / "portefeuille-modeles-2026-09-28.csv"
 TRACES = ICI / "traces-td1.csv"
+METHODE_COUT = ICI / "methode-cout-en.md"
 
 # Dates tirées de la section Sources de portefeuille-modeles-en.md
 DATE_INDEX = "2026-09-28"   # index publics relevés le 28/09/2026
-DATE_PRIX = "2026-09-29"    # prix des routes payantes relus le 29/09/2026
+DATE_PRIX = "2026-10-05"    # prix Groq vérifiés le 05/10/2026 (methode-cout-en.md, étape 2)
 
 # Familles simples (type exact de questions-td1.json) ; un type avec "+" est une combinée
 FAMILLES = {"period": "période", "age on a reference date": "âge (date de référence)",
@@ -40,6 +44,16 @@ COMPOSANTES = {"period": "période", "age on a reference date": "âge date réf.
 def lire_csv(chemin: Path) -> list[dict]:
     with open(chemin, encoding="utf-8", newline="") as flux:
         return list(csv.DictReader(flux))
+
+
+def prix_methode_cout() -> dict:
+    """Lit le tableau de l'étape 2 de methode-cout-en.md : {modèle: (route, entrée, sortie)}."""
+    prix = {}
+    for ligne in METHODE_COUT.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"\|\s*`([^`]+)`\s*\|([^|]+)\|([^|]+)\|([^|]+)\|\s*$", ligne)
+        if m:
+            prix[m.group(1)] = tuple(x.strip() for x in m.group(2, 3, 4))
+    return prix
 
 
 def bilan(cases: list[str], lignes: dict) -> str:
@@ -67,6 +81,7 @@ def main() -> int:
     types = {q["id"]: q["type"] for q in json.loads((ICI / "questions-td1.json").read_text(encoding="utf-8"))["questions"]}
     refs = {r["case_id"]: r["revenue_cents"] for r in lire_csv(ICI / "reference-td1.csv")}
     portefeuille = lire_csv(PORTEFEUILLE)
+    tarifs = prix_methode_cout()
     traces = lire_csv(TRACES)
 
     # Garde-fou : la colonne reference des traces doit être la référence validée,
@@ -103,7 +118,6 @@ def main() -> int:
         # --- Portefeuille : même identifiant exact uniquement ---
         rangs = [p for p in portefeuille if p["identifiant_gate"] == modele]
         index = next((p for p in rangs if p["score_public"].strip()), None)
-        payante = next((p for p in rangs if p["acces"] == "payant"), None)
         if index:
             public_index, index_date = index["score_public"], DATE_INDEX
             index_source = f"{PORTEFEUILLE.name}, ligne {index['cle']}"
@@ -114,20 +128,18 @@ def main() -> int:
             public_index, index_date = "N/A", "N/A"
             index_source = (f"N/A : modèle absent de {PORTEFEUILLE.name} (sélection du 14/10/2026 postérieure "
                             "à l'instantané du 28/09/2026) ; pas d'autre source autorisée")
-        if payante:
-            route = f"{payante['gate']} {payante['identifiant_gate']} (paiement au token)"
-            prix_in, prix_out, prix_date = payante["prix_entree_usd_m"], payante["prix_sortie_usd_m"], DATE_PRIX
-            prix_source = (f"{PORTEFEUILLE.name}, ligne {payante['cle']} ; portefeuille-modeles-en.md, "
-                           "catalogue de l'agrégateur relu le 29/09/2026")
+        # --- Prix : tableau de l'étape 2 de methode-cout-en.md ---
+        route_kit, entree, sortie = tarifs.get(modele, ("", "N/A", "N/A"))
+        if entree != "N/A":
+            route = f"{route_kit} ({fournisseur}, {modele}, paiement au token)"
+            prix_in, prix_out, prix_date = entree, sortie, DATE_PRIX
+            prix_source = ("methode-cout-en.md, étape 2 : catalogue officiel Groq "
+                           "(https://console.groq.com/docs/models) vérifié le 05/10/2026")
         else:
-            if rangs:
-                raison = (f"N/A : le portefeuille ne documente que la route gratuite "
-                          f"{', '.join(p['cle'] for p in rangs)}, aucune route payante du même identifiant")
-            else:
-                raison = "N/A : modèle absent du portefeuille, aucune route payante documentée"
-            if modele.startswith("qwen/qwen3.8"):
-                raison += " (qwen3.8-flash et qwen3.8-max-0902 sont d'autres modèles)"
-            route, prix_in, prix_out, prix_date, prix_source = raison, "N/A", "N/A", "N/A", "N/A : voir paid_route_same_model"
+            route = ("N/A : methode-cout-en.md, étape 2, indique qu'aucune route payante du même modèle exact "
+                     "n'est documentée dans le kit ; le catalogue OpenRouter vérifié le 14/10/2026 ne montre "
+                     "qu'une route gratuite")
+            prix_in, prix_out, prix_date, prix_source = "N/A", "N/A", "N/A", "N/A : voir paid_route_same_model"
 
         params = ", ".join(f"{k}={json.dumps(v) if isinstance(v, dict) else v}" for k, v in m["parametres"].items())
         acces = f"{fournisseur}, {modele}, gratuit ({'plan Free' if fournisseur == 'groq' else 'route :free, prix plafonné à 0'}) ; compte du membre {lettre} ; {params}, temperature=0"
