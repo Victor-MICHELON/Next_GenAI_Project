@@ -51,8 +51,114 @@ Real TD 1 runs use `--models` / `--cases` as described in `enonce-td1-en.md` and
 ```bash
 # Member A (Bertrand), 21 October 2026: see reports/role-A-run.md
 python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-120b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-A.jsonl --out traces-A.csv
-# <TODO: members B-E add their commands>
+# Members B-E: see the French section "Rejouer le TD 1" below
 ```
+
+## Rejouer le TD 1
+
+Toutes les commandes se lancent à la racine du dépôt, avec Python 3.10 ou plus et seulement la bibliothèque standard. Sous Windows, on remplace `python3` par `python`.
+
+### Les clés API
+
+Les clés se mettent dans des variables d'environnement, sur sa propre machine. Elles ne vont jamais dans le dépôt : ni dans un fichier, ni dans un notebook, ni dans un commit. Le `.gitignore` exclut déjà les fichiers `.env`.
+
+```bash
+# Linux, macOS
+export GROQ_API_KEY="..."
+export OPENROUTER_API_KEY="..."
+```
+
+```powershell
+# Windows PowerShell
+$env:GROQ_API_KEY = "..."
+$env:OPENROUTER_API_KEY = "..."
+```
+
+Seules les étapes 1 (sans `--no-network`) et 3 ont besoin des clés et du réseau. Les autres travaillent sur les fichiers du dépôt.
+
+### 1. Vérifier l'accès
+
+```bash
+python3 check_access.py --no-network   # intégrité locale seulement : Python, hash de la base
+python3 check_access.py                # + un appel par modèle autorisé (3 Groq, 2 OpenRouter)
+```
+
+### 2. Calculer les références
+
+```bash
+python3 compute_references.py --dry-run   # calcule et compare SQL / Python sans rien écrire
+python3 compute_references.py             # écrit reference-td1.csv si les deux calculs sont d'accord
+```
+
+### 3. Les cinq lots, un par opérateur
+
+Une requête à la fois pour tout le sous-groupe : on se passe la main entre opérateurs.
+
+```bash
+# A - Groq gpt-oss-120b
+python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-120b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-A.jsonl --out traces-A.csv
+# B - Groq gpt-oss-20b
+python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-20b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-B.jsonl --out traces-B.csv
+# C - OpenRouter Cohere North Mini Code
+python3 skeleton-multi-llm-en.py --run --models openrouter:cohere/north-mini-code:free --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-C.jsonl --out traces-C.csv
+# D - Groq Qwen
+python3 skeleton-multi-llm-en.py --run --models groq:qwen/qwen3.8-27b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-D.jsonl --out traces-D.csv
+# E - OpenRouter Dots
+python3 skeleton-multi-llm-en.py --run --models openrouter:dots-studio/dots-3-note-preview:free --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-E.jsonl --out traces-E.csv
+```
+
+Attention : les fichiers `state-*.jsonl` du dépôt contiennent déjà nos 100 cellules vérifiées. Relancer ces commandes telles quelles ne fait aucun appel, parce que le squelette saute les cellules déjà vérifiées. Pour refaire une vraie expérience, il faut de nouveaux noms pour `--state` et `--out` : ça consomme du quota, et on garde nos fichiers d'origine.
+
+### 4. Fusionner les traces
+
+```bash
+python3 merge_traces.py
+```
+
+Le script écrit `traces-td1.csv`, avec un seul en-tête et toutes les lignes de `traces-A.csv` à `traces-E.csv`. Il vérifie aussi le nombre de cellules par modèle, les retries, l'empreinte du prompt par question et la colonne `reference`.
+
+### 5. Analyser les échecs
+
+```bash
+python3 analyze_failures.py
+```
+
+Le script écrit `notes/echecs-td1.md`, avec une cause par cellule ratée, lue dans le SQL ou dans l'erreur.
+
+### 6. Tableau croisé modèles x questions
+
+```bash
+python3 pivot.py
+```
+
+Le script lit `model-question-comparison-en.csv` et écrit `pivot-td1.md` et `pivot-td1.html`.
+
+### 7. Taux par modèle
+
+Le squelette lit les taux dans un fichier d'état JSONL, donc on lance la commande une fois par opérateur :
+
+```bash
+python3 skeleton-multi-llm-en.py --rates --state state-A.jsonl
+python3 skeleton-multi-llm-en.py --rates --state state-B.jsonl
+python3 skeleton-multi-llm-en.py --rates --state state-C.jsonl
+python3 skeleton-multi-llm-en.py --rates --state state-D.jsonl
+python3 skeleton-multi-llm-en.py --rates --state state-E.jsonl
+```
+
+### Où sont les résultats
+
+| Fichier | Contenu |
+|---|---|
+| `reference-td1.csv` | Les 20 requêtes de référence et leur valeur |
+| `traces-A.csv` ... `traces-E.csv`, `state-A.jsonl` ... `state-E.jsonl` | Traces brutes de chaque opérateur, une ligne par appel |
+| `traces-td1.csv` | Fusion des 100 lignes `real` |
+| `traces-demo.csv`, `traces-demo.jsonl` | Lignes `simulation` du mode `--demo`, hors de tout score |
+| `model-question-comparison-en.csv` | Une ligne finale par modèle et question, avec l'explication |
+| `pivot-td1.md`, `pivot-td1.html` | Le tableau croisé modèles x questions |
+| `notes/echecs-td1.md` | L'analyse des 23 cellules ratées |
+| `five-model-summary-en.csv` | Le résumé des 5 modèles : index, prix, accès, résultats par famille |
+| `prompts/prompt-experience-td1.md` | Le prompt utilisé, tel quel |
+| `reports/td1.md` | Le compte rendu du TD 1 |
 
 ## Repository layout
 
