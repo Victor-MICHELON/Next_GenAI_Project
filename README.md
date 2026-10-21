@@ -48,7 +48,9 @@ python3 atelier-routage.py           # TD 2 routing scenarios, no network
 Real TD 1 runs use `--models` / `--cases` as described in `enonce-td1-en.md` and `consigne-etudiante-en.md`:
 
 ```bash
-# <TODO: add the exact commands used, per member, once the TD 1 batch is run>
+# Member A (Bertrand), 21 October 2026: see reports/role-A-run.md
+python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-120b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-A.jsonl --out traces-A.csv
+# <TODO: members B-E add their commands>
 ```
 
 ## Repository layout
@@ -80,3 +82,20 @@ Open blocks and known failures are listed in each session report; unsuccessful a
 ## AI assistance
 
 AI-assisted coding is used. The prompts are kept in `prompts-en.md` as they were used, and decisions are explained in the reports.
+
+## TD1 reference calculation (Bertrand)
+
+`reference-td1.csv` contains the twenty SQL queries and their computed amounts.
+On 21 October 2026, all twenty SQLite results agreed with a separate computation
+on the supplied CSV files. To reproduce, from the repository root:
+
+```fish
+python3 scripts/verify_references.py
+```
+
+See `reports/reference-method.md` for conventions, contribution and limitations,
+and `reports/reference-verification.csv` for the per-case comparison.
+The calculation itself made no model call. Before the role A batch, the operator
+confirmed that the references had been cross-checked and validated; the twenty
+values also match the separate computation on `main` (`c398d9b`).
+Role A results (20/20 correct): `reports/role-A-run.md`.

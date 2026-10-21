@@ -1,1 +1,21 @@
 case_id,model_id,trace_file,cell_id,nature,status,value_cents,reference_cents,explanation
+C01,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C01,real,correct,792800,792800,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:18 UTC
+C02,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C02,real,correct,590320,590320,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:23 UTC
+C03,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C03,real,correct,936350,936350,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:26 UTC
+C04,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C04,real,correct,2826250,2826250,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:30 UTC
+C05,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C05,real,correct,38480,38480,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:34 UTC
+C06,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C06,real,correct,0,0,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:38 UTC
+C07,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C07,real,correct,13970,13970,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:41 UTC
+C08,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C08,real,correct,605580,605580,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:45 UTC
+C09,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C09,real,correct,487980,487980,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:50 UTC
+C10,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C10,real,correct,558980,558980,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:54 UTC
+C11,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C11,real,correct,446690,446690,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:40:57 UTC
+C12,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C12,real,correct,1666490,1666490,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:01 UTC
+C13,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C13,real,correct,107740,107740,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:05 UTC
+C14,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C14,real,correct,0,0,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:09 UTC
+C15,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C15,real,correct,168680,168680,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:13 UTC
+C16,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C16,real,correct,376740,376740,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:17 UTC
+C17,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C17,real,correct,258180,258180,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:21 UTC
+C18,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C18,real,correct,62480,62480,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:26 UTC
+C19,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C19,real,correct,1990,1990,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:30 UTC
+C20,groq:openai/gpt-oss-120b,traces-A.csv,groq:openai/gpt-oss-120b:C20,real,correct,1106090,1106090,Executed value equals reference; HTTP 200; last attempt 1 of 1; 2026-10-21 12:41:33 UTC
