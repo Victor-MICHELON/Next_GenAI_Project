@@ -11,14 +11,14 @@ Correct par modèle (dernière tentative de chaque cellule) :
   groq:openai/gpt-oss-20b                           18/20
   openrouter:dots-studio/dots-3-note-preview:free   14/20
   groq:qwen/qwen3.8-27b                             13/20
-  openrouter:cohere/north-mini-code:free            11/20
+  openrouter:cohere/north-mini-code:free            12/20
 
-Échecs par famille de questions (24 au total, 5 modèles) :
+Échecs par famille de questions (23 au total, 5 modèles) :
   période                            0 / 30 cellules
   âge à une date de référence        8 / 20 cellules
   âge au moment de la commande       3 / 5 cellules
   liste de produits                  1 / 20 cellules
-  combinées                         12 / 25 cellules
+  combinées                         11 / 25 cellules
 
 Échecs par cause proposée :
   convention d'âge                                                          12
@@ -26,7 +26,6 @@ Correct par modèle (dernière tentative de chaque cellule) :
   convention d'âge (date de référence confondue avec la date de commande)    2
   SQL rejeté                                                                 1
   SQL invalide                                                               1
-  à vérifier                                                                 1
 ```
 
 ## groq:openai/gpt-oss-20b – C02
@@ -480,34 +479,6 @@ WHERE o.product_id IN ('a','b','c')
 **Cause proposée : convention d'âge.**
 
 Justification : bornes de naissance incorrectes : `c.birth_date <= '2026-09-25'` ⇒ âge minimal accepté 0 (attendu birth_date ∈ ]2000-09-25, 2001-09-25], soit 25 ans révolus le 2026-09-25).
-
-## openrouter:cohere/north-mini-code:free – C18
-
-- Question (combinées) : What is the revenue excluding VAT, in euro cents, of the orders placed from 2026-05-01 00:00:00 to 2026-06-01 00:00:00 by customers who were exactly 25 years old at the time of the order?
-- Modèle : `openrouter:cohere/north-mini-code:free` (renvoyé : `cohere/north-mini-code:free`)
-- Verdict : `incorrect` — ` value differs `
-- HTTP : 200 ; erreur : -
-- Valeur : 62480 ; référence : 286650 (reference-td1.csv : 62480)
-- Tokens (sortie / raisonnement) : 191 / 0
-
-````sql
-SELECT COALESCE(SUM(o.quantity_product * p.price), 0) AS revenue_cents
-FROM orders o
-JOIN customers c ON o.customer_id = c.customer_id
-JOIN product p ON o.product_id = p.product_id
-WHERE o.date >= '2026-05-01 00:00:00' AND o.date < '2026-06-01 00:00:00'
-  AND (
-    (strftime('%Y-%m-%d', o.date) >= date(c.birth_date, '+25 years') AND
-     strftime('%Y-%m-%d', o.date) < date(c.birth_date, '+26 years'))
-    OR
-    (strftime('%Y-%m-%d', o.date) >= date(c.birth_date, '+25 years') AND
-     strftime('%Y-%m-%d', o.date) < date(c.birth_date, '+26 years'))
-  );
-````
-
-**Cause proposée : à vérifier.**
-
-Justification : la référence enregistrée dans la trace (286650) diffère de reference-td1.csv (62480) ; la valeur du modèle est égale à la référence actuelle : le verdict de la trace est probablement obsolète.
 
 ## openrouter:cohere/north-mini-code:free – C19
 
