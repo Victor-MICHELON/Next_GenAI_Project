@@ -1,5 +1,5 @@
 provider,model_id,public_index,index_date,index_source,paid_route_same_model,input_usd_per_million,output_usd_per_million,price_date,price_source,access_used,period_results,age_results,product_results,combined_results,trace_files,limits
-groq,openai/gpt-oss-120b,,,,,,,,,,,,,,,
+groq,openai/gpt-oss-120b,11.6,2026-09-28,portefeuille-modeles-2026-09-28.csv (rows gpt-oss-120b#groq and #openrouter),Groq Developer (pay-per-token),0.15,0.60,2026-10-05,"methode-cout-en.md step 2, from https://console.groq.com/docs/models","Groq Free plan, member A personal key; reasoning_effort=low, max_completion_tokens=1024, temperature=0",6/6 correct (C01 C04 C05 C06 C07 C20); 10/10 including combined C15 C17 C18 C19,5/5 correct (reference date C02 C08 C09 C11; at order time C10); 10/10 including combined C15-C19,4/4 correct (C03 C12 C13 C14); 7/7 including combined C16 C17 C19,5/5 correct (C15-C19); combined cases also counted in the family views above,"traces-A.csv; state-A.jsonl (20 real attempts, 0 retries, 0 access errors)","One run of 20 questions on one database: no error rate or ranking. No 29 February birth date in the data, so leap-day age handling untested. cost_native empty (N/A). See reports/role-A-run.md"
 groq,openai/gpt-oss-20b,,,,,,,,,,,,,,,
 openrouter,inclusionai/ling-3.0-flash-sante:free,,,,,,,,,,,,,,,
 groq,qwen/qwen3.8-27b,,,,,,,,,,,,,,,
