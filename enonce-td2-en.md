@@ -1,6 +1,6 @@
 # TD 2 - The quorum, then the routing rule
 
-> Beta. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Beta. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 **Module: Trustworthy generative AI. Session 2 (18 November), 13:30 to 18:00.**
 

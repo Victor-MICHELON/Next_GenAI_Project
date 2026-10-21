@@ -1,6 +1,6 @@
 # Student assignment: ask free models for SQL, run it locally, measure
 
-> Final. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Final. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 ESILV, Next-Generation AI, practical work. One assistant per sub-group of eight.
 Everything runs on your own computer: Python 3.10 or later, the `sqlite3` module

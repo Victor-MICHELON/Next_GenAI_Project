@@ -1,6 +1,6 @@
 # Model portfolio
 
-> Beta. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Beta. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 Snapshot taken on 28 September 2026 from the model registry of a small company: **sixty model and access pairs**, sorted into five capability groups. The table is used to read an offer and to compute a cost. The calls made during the lab sessions only use the five free models listed in `modeles-autorises.json`.
 

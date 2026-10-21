@@ -1,6 +1,6 @@
 # The twenty questions of TD 1
 
-> Final. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Final. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 The base (`data/boutique.sqlite`, seed 20260925) and these questions are the same
 for every sub-group. For each question, write one SQLite `SELECT` that returns

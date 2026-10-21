@@ -1,6 +1,6 @@
 # Presenting the TD 1 results
 
-> Beta. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Beta. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 Fill `model-question-comparison-en.csv` in UTF-8 CSV format: one final row per model/question, normally 100 rows. Keep all attempts in the raw CSV and JSONL traces. The last recorded attempt determines the final result; an unfinished cell is `not_executed`, with its reason in `explanation`.
 

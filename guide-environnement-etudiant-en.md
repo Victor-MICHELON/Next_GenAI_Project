@@ -1,6 +1,6 @@
 # Set up your environment (prerequisite)
 
-> Final. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Final. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 Finish installation and access checks **by 18 October 2026 inclusive**, before the 21 October session. Start by downloading and extracting the student archive. Keep the files together, then open a terminal in the extracted `kit-td1` folder. Show the saved passing check during the fifteen-minute opening.
 

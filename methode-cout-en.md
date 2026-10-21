@@ -1,6 +1,6 @@
 # Cost method, step by step
 
-> Beta. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Beta. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 The required lab calls use free routes. Record zero real spend only after checking the plan and route actually used, with dated evidence. The cost is computed all the same, because the decision made in TD 3 is about what the same configuration would cost a company. This document gives the procedure, from reading the tokens to the annual bill.
 

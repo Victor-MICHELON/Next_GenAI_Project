@@ -1,6 +1,6 @@
 # TD 1 - Comparing models on the same questions
 
-> Final. Pack 2026-10-18-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
+> Final. Pack 2026-10-14-students-1. Set your machine up with [Before TD 1](../before-td1-en.html).
 
 **Module: Trustworthy generative AI. Session 1 (21 October), 14:00 to 18:30.**
 
@@ -60,9 +60,8 @@ Times are working landmarks for the session. Take breaks as needed while coordin
 | 16:05 to 16:30 | **Step 3**: read the traces | final results and explanations |
 | 16:30 to 16:45 | Suggested break window | |
 | 16:45 to 17:30 | **Step 3**, continued: complete the two summaries | comparison CSV and five-model summary |
-| 17:30 to 18:00 | **Step 4**: plenary of the five sub-groups | comparison of the evidence |
-| 18:00 to 18:15 | Mark the session and prepare TD 2 | R1, R2 and R3 |
-| 18:15 to 18:30 | Individual quiz on Moodle | quiz mark |
+| 17:30 to 18:00 | **Step 4**: plenary of four sub-groups | comparison of the evidence |
+| 18:00 to 18:30 | Mark the session and prepare TD 2 | R1, R2 and R3 on the assessment sheet |
 
 ## Opening check (14:00 to 14:15)
 
@@ -70,7 +69,7 @@ Complete installation and preparation **by 18 October inclusive**. Bring the sav
 
 Check the saved evidence and remaining account allowances. Run `check_access.py --no-network` for local integrity if needed; a new network check consumes three Groq and two OpenRouter calls and is counted separately. Address any changed access with the instructor and record a fallback if necessary.
 
-Share the twenty references among all seven members. Assign the five model batches to A-E as in the protocol; C and E use two different members' OpenRouter accounts. F and G cross-check, consolidate traces and prepare the summaries. Roles rotate in TD 2 and 3.
+Share the twenty references among all eight members. Assign the five model batches to A-E as in the protocol; C and E use two different members' OpenRouter accounts. F-H cross-check, consolidate traces and prepare the summaries. Roles rotate in TD 2 and 3.
 
 ## Step 1 - The reference (14:15 to 15:30)
 
@@ -124,14 +123,14 @@ Fill [five-model-summary-en.csv](five-model-summary-en.csv), one row for each of
 
 ## Step 4 - Plenary (17:30 to 18:00)
 
-Each sub-group presents its table. Same database, same questions,
+Each sub-group presents its table and its sheet. Same database, same questions,
 same models: the gaps between sub-groups come from the references, the call
 parameters, the accesses and the variability of the models. Compare the traces
 behind each gap. Note the questions that most models miss and the convention
 involved: they come back in TD 2.
 
 The instructor then marks the session at each table: R1, R2 and R3, each 0, 1
-or 2, as set out on the Assessment page. Before leaving, each sub-group
+or 2, on the sheet laid on your table since 14:00. Before leaving, each sub-group
 designates who prepares TD 2: reading `atelier-vote.py` and the expected routing
 rule.
 
