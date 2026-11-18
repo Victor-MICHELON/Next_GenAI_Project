@@ -148,7 +148,7 @@ WHERE o.date >= '2026-05-01 00:00:00' AND o.date < '2026-06-01 00:00:00'
     OR
     (strftime('%Y-%m-%d', o.date) >= date(c.birth_date, '+25 years') AND
      strftime('%Y-%m-%d', o.date) < date(c.birth_date, '+26 years'))
-  );",62480,286650,incorrect,value differs,200,,6244.3,572,191,0,0,1,2026-10-21 13:08:59,real
+  );",62480,62480,correct,"re-scored: trace reference 286650 replaced by reference-td1.csv 62480 (same SQL, no new call)",200,,6244.3,572,191,0,0,1,2026-10-21 13:08:59,real
 openrouter:cohere/north-mini-code:free:C19,openrouter,cohere/north-mini-code:free,cohere/north-mini-code:free,C19,"What is the revenue excluding VAT, in euro cents, of product d only, for orders placed from 2026-09-01 00:00:00 to 2026-10-01 00:00:00 by customers who are exactly 25 years old on the reference date 2026-09-25?",e5396619f946e273f11d2baf48666f84d8a817fde9f7189579c96ce2c2a14119,"SELECT COALESCE(SUM(o.quantity_product * p.price), 0) AS revenue_cents
 FROM orders o
 JOIN product p ON o.product_id = p.product_id

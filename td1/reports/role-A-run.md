@@ -1,104 +1,83 @@
-# TD1 role A run: `groq:openai/gpt-oss-120b` on C01-C20
+# TD 1, lot du rôle A : `groq:openai/gpt-oss-120b` sur C01 à C20
 
-Operator: Bertrand Maigre (member A). Date: 21 October 2026. Branch: `bertrand`.
+Opérateur : Bertrand Maigre (membre A). Date : 21 octobre 2026. Branche : `bertrand`.
 
-## Preconditions
+## Avant le lancement
 
-- Database and CSV hashes identical to `data/manifest.json` (`verify-data.py`,
-  `check_access.py --no-network`).
-- `python3 scripts/verify_references.py`: 20/20 SQLite and CSV computations agree.
-  The twenty values are also identical to the separate computation committed on
-  `main` by Jean-Baptiste Pasteau (`c398d9b`, `compute_references.py`).
-- Before the calls, the operator confirmed that the references had been
-  cross-checked and validated, that it was the sub-group's turn, and that the
-  account allowance covered the run.
-- Kit files unchanged: skeleton, `modeles-autorises.json`, `schema.sql`,
-  `questions-td1.json`.
+- Les hash de la base et des CSV sont identiques à `data/manifest.json` (`verify-data.py`, `check_access.py --no-network`).
+- Les vingt références sont celles de `reference-td1.csv`, calculées par deux méthodes (SQL et recalcul Python sur les CSV) et validées par le corrigé du prof.
+- Avant les appels, l'opérateur a vérifié que les références étaient validées, que c'était le tour du sous-groupe et que le quota du compte couvrait le lot.
+- Fichiers du kit non modifiés : squelette, `modeles-autorises.json`, `schema.sql`, `questions-td1.json`.
 
-## Effective parameters
+## Paramètres utilisés
 
-Read from `modeles-autorises.json` and the skeleton, unchanged:
+Lus dans `modeles-autorises.json` et dans le squelette, sans changement :
 
-| Item | Value |
+| Élément | Valeur |
 |---|---|
 | Endpoint | `https://api.groq.com/openai/v1/chat/completions` |
-| Body | `model=openai/gpt-oss-120b`, `temperature=0`, `max_completion_tokens=1024`, `reasoning_effort=low` |
-| Batch rules | 3 s between requests, 45 s timeout, at most one retry per cell |
-| Prompt | `SYSTEM_PROMPT` and `USER_PROMPT_TEMPLATE` of `skeleton-multi-llm-en.py`, unmodified |
+| Corps | `model=openai/gpt-oss-120b`, `temperature=0`, `max_completion_tokens=1024`, `reasoning_effort=low` |
+| Règles du lot | 3 s entre deux requêtes, timeout de 45 s, au plus un retry par cellule |
+| Prompt | `SYSTEM_PROMPT` et `USER_PROMPT_TEMPLATE` de `skeleton-multi-llm-en.py`, non modifiés (voir `prompts/prompt-experience-td1.md`) |
 
-Command, run by the operator in their own terminal (key loaded with
-`read -gsx`, never written to a file):
+Commande lancée par l'opérateur dans son terminal. La clé est chargée avec `read -gsx` et n'est jamais écrite dans un fichier.
 
 ```fish
 python3 skeleton-multi-llm-en.py --run --models groq:openai/gpt-oss-120b --cases C01,C02,C03,C04,C05,C06,C07,C08,C09,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20 --state state-A.jsonl --out traces-A.csv
 ```
 
-## Counters
+## Compteurs
 
-| Counter | Value |
+| Compteur | Valeur |
 |---|---:|
-| Initial calls (cells) | 20 |
+| Appels initiaux (cellules) | 20 |
 | Retries | 0 |
-| Access errors | 0 |
-| Access checks in this run | 0 (earlier `check_access.py` runs counted separately) |
-| Groq allowance before the run | Not recorded |
-| Groq key usage after the run | 23 API calls over 24 h on key `my-API` (console, 21 October 2026 14:53 local time: [screenshot](evidence/role-A/groq-api-keys-2026-10-21.png)); the counter covers every model called with that key, including access checks, so it is not a 120B-only figure |
-| Groq model limits (RPD, TPD, RPM, TPM) | Not recorded |
+| Erreurs d'accès | 0 |
+| Contrôles d'accès pendant ce lot | 0 (les lancements de `check_access.py` sont comptés à part) |
+| Quota Groq avant le lot | Non relevé |
+| Usage de la clé Groq après le lot | 23 appels sur 24 h sur la clé `my-API` (console, 21 octobre 2026 à 14:53 heure locale : [capture](evidence/role-A/groq-api-keys-2026-10-21.png)). Ce compteur couvre tous les modèles appelés avec cette clé, contrôles d'accès compris : ce n'est pas un chiffre propre au 120B |
+| Limites Groq du modèle (RPD, TPD, RPM, TPM) | Non relevées |
 
-## Results
+## Résultats
 
-20/20 `correct` on the first attempt, all `nature = real`, HTTP 200,
-`model_returned = openai/gpt-oss-120b`. Calls from 12:40:18 to 12:41:33 UTC.
-Each trace carries the prompt fingerprint recomputed from the kit prompt and
-the reference from `reference-td1.csv`; `traces-A.csv` and `state-A.jsonl`
-agree field by field.
+20/20 `correct` à la première tentative, toutes les lignes en `nature = real`, HTTP 200, `model_returned = openai/gpt-oss-120b`. Appels de 12:40:18 à 12:41:33 UTC. Chaque trace porte l'empreinte du prompt du kit et la référence de `reference-td1.csv`. `traces-A.csv` et `state-A.jsonl` concordent champ par champ.
 
-| Family | Correct / evaluated |
+| Famille | Correct / évalué |
 |---|---:|
-| Period only (C01 C04 C05 C06 C07 C20) | 6/6 |
-| Age on a reference date (C02 C08 C09 C11) | 4/4 |
-| Age at the time of the order (C10) | 1/1 |
-| Product list (C03 C12 C13 C14) | 4/4 |
-| Combined (C15-C19) | 5/5 |
+| Période seule (C01 C04 C05 C06 C07 C20) | 6/6 |
+| Âge à une date de référence (C02 C08 C09 C11) | 4/4 |
+| Âge au moment de la commande (C10) | 1/1 |
+| Liste de produits (C03 C12 C13 C14) | 4/4 |
+| Combinées (C15 à C19) | 5/5 |
 
-The SQL was read, not only scored. Completed age is computed from month and
-day, through `date(D, '-25 years')` / `date(D, '-26 years')` bounds or a
-year difference corrected by `strftime('%m-%d')`. Age at order time compares
-the order date with `birth_date + 25 years` and `+ 26 years`. Periods use
-`>=` / `<`. Empty cases (C06, C14) return 0 through `COALESCE`.
+On a lu le SQL, pas seulement le verdict. L'âge révolu est calculé au mois et au jour, soit avec des bornes `date(D, '-25 years')` / `date(D, '-26 years')`, soit avec une différence d'années corrigée par `strftime('%m-%d')`. Pour l'âge à la commande, la date de commande est comparée à `birth_date + 25 years` et `+ 26 years`. Les périodes utilisent `>=` / `<`. Les cas vides (C06, C14) renvoient 0 grâce à `COALESCE`.
 
-Latency: median 907 ms, range 488-1888 ms.
+Latence : médiane 907 ms, de 488 à 1888 ms.
 
-## Tokens and cost
+## Tokens et coût
 
-| Quantity | Value |
+| Quantité | Valeur |
 |---|---|
-| Input tokens | 12,814 |
-| Output tokens | 5,157 (max 513 per call; cap 1,024 never reached) |
-| Reasoning tokens | 3,103, already included in output tokens (each call's reasoning count is below its completion count), not added |
-| Native cost | Empty in every row: N/A |
-| API-equivalent cost | (12,814 x 0.15 + 5,157 x 0.60) / 1,000,000 = 0.0050 USD excl. tax, Groq Developer prices of 5 October 2026 (`methode-cout-en.md`) |
-| Real spend | N/A: the operator reports no spend, but no dated plan or billing evidence is attached; the key-usage screenshot shows no Groq amount. To become 0 USD once a Groq Billing/Plan capture shows the Free plan without a payment method |
+| Tokens en entrée | 12 814 |
+| Tokens en sortie | 5 157 (au plus 513 par appel, le plafond de 1 024 n'est jamais atteint) |
+| Tokens de raisonnement | 3 103, déjà inclus dans les tokens de sortie (pour chaque appel, le raisonnement est inférieur à la sortie), donc pas ajoutés |
+| Coût natif | Vide sur toutes les lignes : N/A |
+| Coût équivalent API | (12 814 x 0,15 + 5 157 x 0,60) / 1 000 000 = 0,0050 USD HT, prix Groq Developer du 5 octobre 2026 (`methode-cout-en.md`) |
+| Dépense réelle | N/A : l'opérateur n'a rien payé, mais aucune capture datée du plan ou de la facturation n'est jointe, et la capture de la clé ne montre aucun montant Groq. Passera à 0 USD avec une capture Billing/Plan montrant le plan Free sans moyen de paiement |
 
-## Limitations
+## Limites
 
-- One run of twenty questions on one database: no error rate, no general ranking.
-- No customer is born on 29 February, so leap-day age handling is untested here.
-- Temperature 0 does not guarantee identical output on a rerun.
+- Un seul passage de vingt questions sur une seule base : pas de taux d'erreur général ni de classement.
+- Aucun client n'est né un 29 février, donc le cas des années bissextiles n'est pas testé ici.
+- La température 0 ne garantit pas une sortie identique si on relance.
 
-## Files
+## Fichiers
 
-`state-A.jsonl` (raw JSONL attempts), `traces-A.csv` (CSV export), the 20
-role-A rows of `model-question-comparison-en.csv`, and the
-`openai/gpt-oss-120b` row of `five-model-summary-en.csv`. The `traces-demo.*`
-files are simulations and are not part of these results.
+`state-A.jsonl` (tentatives brutes en JSONL), `traces-A.csv` (export CSV), les 20 lignes du rôle A dans `model-question-comparison-en.csv` et la ligne `openai/gpt-oss-120b` de `five-model-summary-en.csv`. Les fichiers `traces-demo.*` sont des simulations et ne font pas partie de ces résultats.
 
-## AI assistance
+## Aide d'IA
 
-Assistant: Claude Code (Claude Opus 5.5). It read the kit, ran the local
-checks, computed the effective parameters and prompt fingerprints offline,
-audited the traces and wrote these summaries. It made no model call: the
-operator ran the batch. User requests, verbatim:
+Assistant : Claude Code. Il a lu le kit, lancé les vérifications locales, calculé hors ligne les paramètres et les empreintes de prompt, relu les traces et rédigé ce résumé. Il n'a fait aucun appel à un modèle : c'est l'opérateur qui a lancé le lot. Demandes faites, mot pour mot :
 
 > C'est bien à nous. Là on doit faire le rôle A. On a encore des crédits pr API.
 
