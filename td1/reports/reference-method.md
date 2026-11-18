@@ -16,7 +16,7 @@ Les deux calculs donnent les mêmes vingt valeurs. Le texte SQL de `reference-td
 
 ## Rejouer le calcul
 
-À la racine du dépôt :
+Depuis `td1/` :
 
 ```bash
 python3 compute_references.py --dry-run

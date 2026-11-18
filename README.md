@@ -9,7 +9,7 @@ Les documents fournis par le prof (énoncés, consigne, guide, portefeuille, mé
 | Membre | GitHub | Contributions principales (TD 1) |
 |---|---|---|
 | Victor Michelon | `Victor-MICHELON` | Création du dépôt ; opérateur B : lot `groq:openai/gpt-oss-20b` (`traces-B.csv`, `state-B.jsonl`) |
-| Bertrand Maigre | `BertrandM78` | Opérateur A : lot `groq:openai/gpt-oss-120b` et [reports/role-A-run.md](reports/role-A-run.md) ; deuxième calcul des références (`scripts/`) ; analyse des échecs (`analyze_failures.py`, `notes/echecs-td1.md`), `model-question-comparison-en.csv` et tableau croisé (`pivot.py`) |
+| Bertrand Maigre | `BertrandM78` | Opérateur A : lot `groq:openai/gpt-oss-120b` et [td1/reports/role-A-run.md](td1/reports/role-A-run.md) ; deuxième calcul des références (`scripts/`) ; analyse des échecs (`analyze_failures.py`, `notes/echecs-td1.md`), `model-question-comparison-en.csv` et tableau croisé (`pivot.py`) |
 | Jean-Baptiste Pasteau | - | Références C01 à C20 (`compute_references.py`) ; fusion des traces (`merge_traces.py`) ; résumé des cinq modèles (`fill_summary.py`) ; prompt, README et [reports/td1.md](reports/td1.md) |
 | Oscar Dujardin | `OscarDjr` | Opérateur D : lot `groq:qwen/qwen3.8-27b` (`traces-D.csv`, `state-D.jsonl`) ; tableau des membres et nettoyage du dépôt |
 | Cyprien Avnel | `cyp44avenel-droid` | Opérateur C : lot `openrouter:cohere/north-mini-code:free` (`traces-C.csv`, `state-C.jsonl`) |
@@ -42,7 +42,7 @@ $env:OPENROUTER_API_KEY = "..."
 
 ## Rejouer le TD 1
 
-Toutes les commandes se lancent à la racine du dépôt. Sous Windows, on remplace `python3` par `python`. Seules les étapes 1 (sans `--no-network`) et 3 ont besoin des clés et du réseau. Les autres travaillent sur les fichiers du dépôt.
+Toutes les commandes se lancent depuis le dossier `td1/` (`cd td1`), où se trouvent les scripts, `data/` et le squelette. Sous Windows, on remplace `python3` par `python`. Seules les étapes 1 (sans `--no-network`) et 3 ont besoin des clés et du réseau. Les autres travaillent sur les fichiers du dépôt.
 
 ### 1. Vérifier l'accès
 
@@ -59,7 +59,7 @@ python3 compute_references.py --dry-run   # calcule et compare SQL / Python sans
 python3 compute_references.py             # écrit reference-td1.csv si les deux calculs sont d'accord
 ```
 
-Les vingt valeurs de `reference-td1.csv` ont été validées par le corrigé du prof. La méthode et les conventions sont dans [reports/reference-method.md](reports/reference-method.md).
+Les vingt valeurs de `reference-td1.csv` ont été validées par le corrigé du prof. La méthode et les conventions sont dans [td1/reports/reference-method.md](td1/reports/reference-method.md).
 
 ### 3. Les cinq lots, un par opérateur
 
@@ -142,8 +142,8 @@ python3 skeleton-multi-llm-en.py --rates --state state-E.jsonl
 | `pivot-td1.md`, `pivot-td1.html` | Le tableau croisé modèles x questions |
 | `notes/echecs-td1.md` | L'analyse des 23 cellules ratées |
 | `five-model-summary-en.csv` | Le résumé des 5 modèles : index, prix, accès, résultats par famille |
-| [prompts/prompt-experience-td1.md](prompts/prompt-experience-td1.md) | Le prompt utilisé, tel quel, identique pour les 5 modèles |
-| `reports/role-A-run.md`, `reports/reference-method.md` | Détail du lot A et de la méthode des références |
+| [td1/prompts/prompt-experience-td1.md](td1/prompts/prompt-experience-td1.md) | Le prompt utilisé, tel quel, identique pour les 5 modèles |
+| `td1/reports/role-A-run.md`, `td1/reports/reference-method.md` | Détail du lot A et de la méthode des références |
 
 ## Nos scripts
 

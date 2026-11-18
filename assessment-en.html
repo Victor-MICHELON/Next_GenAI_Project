@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Assessment: what is marked and how the mark is computed | ESILV</title><style>
+:root{--ink:#18283d;--blue:#165c79;--line:#cbd7df;--bg:#eef3f6;--paper:#fff}
+*{box-sizing:border-box}html{scroll-padding-top:62px}body{margin:0;color:var(--ink);background:var(--bg);font:17px/1.55 system-ui,-apple-system,'Segoe UI',sans-serif}
+a{color:#075e83;overflow-wrap:anywhere}header{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:2px solid var(--blue)}
+.bar{min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:3px 16px;flex-wrap:wrap}.brand{font-size:.86rem;font-weight:700}
+button{font:inherit;min-height:40px;padding:6px 12px;border:1px solid var(--line);background:#fff;border-radius:5px;cursor:pointer;color:var(--ink)}
+#header-content{padding:0 16px 12px}nav{display:flex;flex-wrap:wrap;gap:6px}nav a{padding:4px 10px;border:1px solid var(--line);border-radius:5px;text-decoration:none;font-size:.85rem;max-width:100%}
+header.collapsed #header-content,header.collapsed .brand{display:none}header.collapsed .bar{justify-content:flex-end}
+main{max-width:1040px;margin:24px auto 50px;background:var(--paper);padding:32px 44px;border-radius:10px}
+h1{font-size:2rem;line-height:1.15;color:var(--blue)}h2{font-size:1.38rem;color:var(--blue);margin:34px 0 12px;border-top:1px solid var(--line);padding-top:16px}h3{font-size:1.12rem}
+section.slide{border-bottom:1px solid var(--line);padding:22px 0;display:block;min-height:0}.slide h1{font-size:1.8rem}.chapitre-tag,.meta,.sub{color:#45566b}.card{border:1px solid var(--line);padding:12px;margin:8px 0;border-radius:6px}.cards,.grid-2,.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:12px}
+.notice{border-left:5px solid #ba7419;background:#fff4dc;padding:12px 16px;margin:0 0 24px;font-size:.96rem}.notice p{margin:4px 0}.notice.final{border-left-color:#2d7a4f;background:#eef7f1}.notice.pack{border-left-color:#165c79;background:#f4fafc}p,li{max-width:86ch}
+.tableau{overflow-x:auto;max-width:100%;margin:16px 0}table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}th{background:#e7eff3}pre{overflow-x:auto;padding:16px;background:#edf2f7;border-radius:6px;font-size:.86rem}code{font-family:ui-monospace,monospace;font-size:.91em;overflow-wrap:anywhere}pre code{overflow-wrap:normal}summary{min-height:40px;cursor:pointer;padding:8px 0;font-weight:600}
+blockquote{margin:12px 0;padding:8px 16px;border-left:3px solid var(--line)}.toc{padding:16px;background:#f2f6f8}.toc ul{columns:2;column-gap:32px}.toc li{break-inside:avoid;margin:3px 0}.check{display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid #e4eaf0;padding:10px 0}.check input{width:22px;height:22px;flex:none;margin:4px 0}.check label{cursor:pointer}.unit{break-inside:avoid}.evidence{font-size:.9rem;color:#46586d}.pill{display:inline-block;background:#e6f1f4;padding:3px 8px;border-radius:4px;font-size:.83rem}.steps{list-style:none;padding:0;margin:18px 0;counter-reset:pas}.steps>li{counter-increment:pas;display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0;background:#fbfdfe;break-inside:avoid}.steps>li::before{content:counter(pas);flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;font-size:1.05rem;display:flex;align-items:center;justify-content:center}.steps .body{flex:1 1 auto;min-width:0}.steps .what{font-weight:700;font-size:1.02rem}.steps .what svg{vertical-align:-4px;margin-right:8px}.steps .how{margin:5px 0 0}.steps .ok{margin:7px 0 0;font-size:.93rem;border-left:4px solid #2d7a4f;background:#eef7f1;padding:6px 10px;border-radius:0 5px 5px 0}.steps .ko{margin:5px 0 0;font-size:.93rem;border-left:4px solid #ba7419;background:#fff4dc;padding:6px 10px;border-radius:0 5px 5px 0}.steps .time{display:inline-block;background:#e6f1f4;padding:2px 8px;border-radius:4px;font-size:.82rem;font-weight:600}.gate{border:2px solid var(--blue);border-radius:8px;padding:14px 18px;margin:22px 0;background:#f4fafc}.gate p{margin:5px 0}.gate .flag{font-weight:700;color:var(--blue)}@media(max-width:700px){.steps>li{gap:11px;padding:12px}.steps>li::before{flex-basis:32px;width:32px;height:32px;font-size:.95rem}}@media print{.steps>li{background:#fff}.gate{background:#fff}}footer{max-width:1040px;margin:auto;padding:0 24px 28px;font-size:.85rem;color:#495d70}
+@media(max-width:700px){body{font-size:16px}main{margin:10px 6px;padding:20px 15px}h1{font-size:1.6rem}.toc ul{columns:1}.bar{padding:3px 10px}#header-content{padding:0 10px 10px}}
+@media print{header,.toc,.self-check-help,footer{display:none}body{background:white;font-size:10pt;line-height:1.35}main{padding:0;margin:0;border-radius:0;max-width:none}h1{font-size:20pt}h2{font-size:14pt;break-after:avoid;margin-top:18pt}h3{font-size:12pt;break-after:avoid}thead{display:table-header-group;break-after:avoid}p,li,tr,.check{break-inside:avoid}.tableau{overflow:visible}table{font-size:8.3pt}th,td{padding:5pt}pre{white-space:pre-wrap;overflow:visible}a{color:inherit;text-decoration:none}.notice{border:1pt solid #aaa;background:#fff}.unit{break-inside:auto}.check input{display:none}footer{font-size:8pt;padding:12pt 0}section.slide{break-before:page}.slide:first-of-type{break-before:auto}@page{size:A4;margin:17mm;@bottom-right{content:counter(page);font-size:8pt;color:#526477}}}
+
+a.download{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;background:#165c79;color:#fff;border-radius:5px;font-weight:700;text-decoration:none}
+</style></head>
+<body><header><div class="bar"><span class="brand">ESILV · Trustworthy Generative AI · 2026-10-14-students-1</span><button id="header-toggle" aria-expanded="true" aria-controls="header-content">Collapse header</button></div><div id="header-content"><nav aria-label="Resource navigation"><a href="../index.html">Home</a><a href="before-td1-en.html">Before TD 1</a><a href="start-here-en.html">Resources</a><a href="assessment-en.html">Assessment</a><a href="submission-en.html">Hand-in</a><a href="resource-index-en.html">Files</a></nav></div></header>
+<main><h1 id="section-1">Assessment: what is marked and how the mark is computed</h1><aside class="notice"><p><strong>Beta · 2026-10-14-students-1, 14 October 2026</strong></p><p>Beta: this resource may still change before its session. The site is updated in place; the pack version above identifies what you read.</p></aside><details class="toc"><summary>Contents (10 sections)</summary><ul><li><a href="#section-2">How your mark is built</a></li><li><a href="#section-3">TD 1 - 21 October 2026 - Comparing models on the same questions</a></li><li><a href="#section-4">TD 2 - 18 November 2026 - The quorum, then the routing rule</a></li><li><a href="#section-5">TD 3 - 11 December 2026 - Quantifying and deciding</a></li><li><a href="#section-6">Hand-in, after TD 3</a></li><li><a href="#section-7">Where code is marked</a></li><li><a href="#section-8">Status</a></li><li><a href="#section-9">How the levels are applied</a></li><li><a href="#section-10">Fictional worked example</a></li><li><a href="#section-11">Code and AI assistance</a></li></ul></details>
+<p>Beta, pack 2026-10-14-students-1, 14 October 2026. This document is the sheet laid on each sub-group's table from TD 1, with the marking rules that go with it. The scale, the shared group mark, the size of the oral adjustment and the place of code are proposed by the teaching team; the school's written approval is pending, and any change is dated on this page.</p>
+<p>The sheet is the whole rule: nine outcomes, three per session, each marked 0, 1 or 2 on what the sub-group shows during the session, plus two points on the hand-in. No range, no half point, no discretionary bonus. You can compute the mark from the sheet at any time; two instructors who see the same evidence read the same level.</p>
+<p>The printable sheet is <a href="assessment-en.pdf">assessment-en.pdf</a>, A4 landscape, one copy per sub-group.</p>
+<p>Sub-group: ............   Instructor: ............   Members: ............</p>
+<p>This sheet stays on your table for the three sessions. Your instructor marks each outcome at the end of the session, on what has been shown.</p>
+<h2 id="section-2">How your mark is built</h2>
+<ul>
+<li><strong>9 outcomes, 2 points each, marked at the end of each session: 18 points.</strong> Three outcomes per session, one mark per outcome: 0, 1 or 2. Nothing in between.</li>
+<li><strong>2 points on the hand-in</strong>, checked once after TD 3: the repository and the video. They are the only points that the sessions do not carry.</li>
+<li><strong>Total out of 20</strong>: the sum of the three session marks plus the hand-in points. Your mark is the sum of the levels, so you can compute it yourself at any time.</li>
+<li><strong>The oral presentation then adjusts this total by -1 to +1 point</strong>, on the clarity of the presentation and on whether each figure put forward refers back to a line of your traces.</li>
+<li><strong>An outcome marked 2 whose evidence is absent from the final repository drops to 1. No session mark ever rises after the session: the repository confirms, it does not re-mark.</strong></li>
+<li><strong>The eight members of a sub-group receive the same mark.</strong></li>
+</ul>
+<h2 id="section-3">TD 1 - 21 October 2026 - Comparing models on the same questions</h2>
+<div class="tableau"><table>
+<thead>
+<tr><th>Outcome</th><th>What you show</th><th>0</th><th>1</th><th>2</th><th>Mark</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>R1</strong>. An independent, checked reference</td><td><code>reference-td1.csv</code> on screen, twenty rows, each with the query that produced its value.</td><td>Fewer than twenty rows, or a value that comes from a model instead of the database.</td><td>Twenty runnable queries; a value still differs from the answer key, or the convention and independent check are not explained.</td><td>Twenty correct values, an explained convention and an independent check shown, on the first attempt or after a correction.</td><td></td></tr>
+<tr><td><strong>R2</strong>. One trace line per call</td><td>A trace selected by the instructor, its prompt fingerprint and its attempts.</td><td>No trace file, or lines written by hand after the calls, or one line per question instead of one per call.</td><td>One automatic row per call to the five models, all attempts retained; fallback cells are identified.</td><td>In addition: you explain the selected trace, the common fingerprint per question, and a missing measurement or a retry if present. Missing and zero differ; a retry is not required.</td><td></td></tr>
+<tr><td><strong>R3</strong>. The cause of a failure, read from the trace</td><td>A cell and its evidence; the instructor supplies an example if the batch has none. Historical real, replayed or simulated nature is explicit.</td><td>No cause, or an impression ("this model is weak").</td><td>The cause of the cell pointed at, read from the returned SQL or from the HTTP status.</td><td>In addition: you explain a failed access and distinguish it from a wrong answer. A supplied example gives access to the same level; no failure is required in your batch.</td><td></td></tr>
+</tbody>
+</table></div>
+<p>Evidence seen: ..............................................   Next fix: ..........................................   Session mark: ...... / 6</p>
+<h2 id="section-4">TD 2 - 18 November 2026 - The quorum, then the routing rule</h2>
+<div class="tableau"><table>
+<thead>
+<tr><th>Outcome</th><th>What you show</th><th>0</th><th>1</th><th>2</th><th>Mark</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Q1</strong>. A vote that abstains</td><td><code>atelier-vote.py</code> run in front of the instructor on one question where no value has a majority.</td><td>The vote does not run, or it keeps a value without a majority.</td><td>The vote runs, returns the value that reaches a strict majority and abstains when none does.</td><td>In addition: an unavailable member stays in n without voting, and two accesses to the same provider and model pair count as one vote.</td><td></td></tr>
+<tr><td><strong>Q2</strong>. A wrong consensus, explained</td><td>An identified batch case or instructor-supplied historical real or synthetic case: agreeing values, independent reference, declared panel and k-of-n threshold.</td><td>The available or supplied case is not explained, or it does not show a wrong agreement.</td><td>At least two models return the same wrong value; you show the reference and distinguish that agreement from the declared quorum result.</td><td>In addition: you explain the cause in the SQL and an independent check able to detect it. No wrong agreement in your own batch does not cap the mark.</td><td></td></tr>
+<tr><td><strong>Q3</strong>. A routing rule tied to the TD 1 table</td><td>The one-page rule; the instructor points at one line and asks which cell of the TD 1 table justifies it.</td><td>No written rule, or a rule that sends every question to the same model.</td><td>One line per question family, each with the first model called and the check retained.</td><td>In addition: the line pointed at cites the TD 1 cell that justifies it, and the rule says what to do when the first model is unavailable: next model, deferral, abstention.</td><td></td></tr>
+</tbody>
+</table></div>
+<p>Evidence seen: ..............................................   Next fix: ..........................................   Session mark: ...... / 6</p>
+<h2 id="section-5">TD 3 - 11 December 2026 - Quantifying and deciding</h2>
+<div class="tableau"><table>
+<thead>
+<tr><th>Outcome</th><th>What you show</th><th>0</th><th>1</th><th>2</th><th>Mark</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>C1</strong>. Two cost columns that do not mix</td><td>The configuration table on screen.</td><td>One cost column only, or a zero presented as a measurement.</td><td>Real spend and API equivalent separated for at least three configurations, costed or N/A with a documented reason.</td><td>In addition: dated, sourced prices for the same model, missing measurements preserved, coverage stated; a known subtotal is not presented as a complete total.</td><td></td></tr>
+<tr><td><strong>C2</strong>. A decision derived from the cost of an error</td><td>The named use case and the configuration you recommend.</td><td>No use case named, or the most capable model chosen without a reason.</td><td>A use case named, what an error costs in it, and a configuration recommended.</td><td>In addition: the recommendation cites cost per question or its justified unavailability, and the frequency observed in the batch.</td><td></td></tr>
+<tr><td><strong>C3</strong>. Written limits</td><td>The third slide.</td><td>No limits written.</td><td>What your twenty questions do not cover is written down.</td><td>In addition: simulator assumptions are explicit; twenty questions establish neither a general rate, a permanent ranking nor an error bound guaranteed by quorum.</td><td></td></tr>
+</tbody>
+</table></div>
+<p>Evidence seen: ..............................................   Next fix: ..........................................   Session mark: ...... / 6</p>
+<h2 id="section-6">Hand-in, after TD 3</h2>
+<div class="tableau"><table>
+<thead>
+<tr><th>Point</th><th>What is checked</th><th>0</th><th>1</th><th>Mark</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>H1</strong>. A repository that can be replayed</td><td>The sub-group's GitHub repository, after TD 3.</td><td>The artefacts of one session are missing, or a figure presented cannot be found in any line.</td><td>The artefacts of the three sessions are there and every figure presented can be traced back to a line.</td><td></td></tr>
+<tr><td><strong>H2</strong>. A video that shows the chain</td><td>The recorded video attached to the repository.</td><td>No video, or a video that does not show the complete chain.</td><td>One call, the verdict, the vote.</td><td></td></tr>
+</tbody>
+</table></div>
+<p>Total: ...... / 20   (TD 1 + TD 2 + TD 3 + Hand-in)</p>
+<h2 id="section-7">Where code is marked</h2>
+<ul>
+<li>How the system behaves is marked by Q1: 2 points out of 20. Observable evidence: the vote runs in front of the instructor, abstains without a majority, keeps the unavailable member in n.</li>
+<li>Reading and criticising code is marked by R3 and Q2: 4 points out of 20. Observable evidence: the cause of a failure and the cause of a wrong consensus, read from the returned SQL.</li>
+<li>Programming style carries no point in this proposal. The school says whether it wants points for it, with what weight and on what observable evidence.</li>
+<li>A language model's opinion on a repository opens no point: it says where to look, and the instructor decides on what was seen in the session.</li>
+<li>Coding assistance is proposed with disclosure, verification and explanation of the code; the policy awaits school approval. A reference value comes from SQL executed on the database and an independent check, never from adopting an LLM answer.</li>
+</ul>
+<h2 id="section-8">Status</h2>
+<p>Teaching team proposal. The scale, the mark shared by the eight members, the size of the oral adjustment and the place of code are awaiting written approval from the module leader.</p>
+<h2 id="section-9">How the levels are applied</h2>
+<p>The instructor marks what has been shown on screen, not what is announced or promised for later. Level 2 requires the evidence described for that outcome, including the supplied examples explicitly accepted by R3 and Q2. A doubt between two levels is settled by asking for the missing evidence before the end of the session; if it is not shown, the lower level applies.</p>
+<p>A weak model result, an abstention or a negative gain from voting can still earn full marks: the outcomes reward the method, never the raw success rate of a model. Neither buying access nor using a more expensive model earns a point. An unavailable provider leads to a documented block and to the replay traces supplied by the instructor; a replay line is marked like a real line and loses no point.</p>
+<p>R1 level 2 accepts twenty correct references on the first attempt, with an explained convention and independent check. R2 asks for an explanation of a selected trace, its common fingerprint and a missing measurement or retry if present; no retry is required. When a batch has no failure or wrong agreement, use an identified supplied case for R3 or Q2. Its nature stays separate from measured batch counts.</p>
+<h2 id="section-10">Fictional worked example</h2>
+<p>A sub-group is marked 2, 1, 1 in TD 1 (four points), 2, 2, 1 in TD 2 (five points) and 1, 2, 2 in TD 3 (five points). Its repository holds the artefacts of the three sessions and its video shows a call, the verdict and the vote: two points. Total fourteen plus two, sixteen. One outcome marked 2 in TD 2 has no evidence in the repository: it drops to 1, so fifteen. The oral presentation traces every figure asked for back to a line: plus one. <strong>Sixteen out of twenty</strong>, the same mark for the eight members.</p>
+<h2 id="section-11">Code and AI assistance</h2>
+<p>The code is not marked for itself; the outputs, the decisions and their explanation are. AI-assisted code is accepted, as is code written by hand. The prompts used, for the experiment as for the coding help, are kept in the repository as they were used.</p></main><footer>Didier Parisot · ESILV · Pack 2026-10-14-students-1.</footer><script>
+(()=>{'use strict';const header=document.querySelector('header'),button=document.getElementById('header-toggle');
+const key='esilv-beta-header:'+location.pathname;let saved=null;try{saved=localStorage.getItem(key)}catch(e){}
+function setHeader(collapsed){header.classList.toggle('collapsed',collapsed);button.setAttribute('aria-expanded',String(!collapsed));button.textContent=collapsed?'Expand header':'Collapse header';document.documentElement.style.scrollPaddingTop=(header.offsetHeight+12)+'px';}
+setHeader(saved===null?matchMedia('(max-width:700px)').matches:saved==='collapsed');button.addEventListener('click',()=>{const c=!header.classList.contains('collapsed');setHeader(c);try{localStorage.setItem(key,c?'collapsed':'expanded')}catch(e){}});
+addEventListener('resize',()=>setHeader(header.classList.contains('collapsed')));
+document.querySelectorAll('input[data-check]').forEach(box=>{const k='esilv-beta-review-1:'+location.pathname+':'+box.dataset.check;try{box.checked=localStorage.getItem(k)==='1'}catch(e){}box.addEventListener('change',()=>{try{localStorage.setItem(k,box.checked?'1':'0')}catch(e){}})});
+})();
+</script></body></html>
