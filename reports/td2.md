@@ -224,7 +224,53 @@ Exemple construit par l'énoncé, pas une sortie de modèle. La table jouet `sal
 
 ## 3. Étape 3 - La règle de routage (binôme C)
 
-<TODO binôme C>
+Ce qu'on a produit :
+
+- la règle d'une page, [td2/C-routing/regle-routage.md](../td2/C-routing/regle-routage.md). Pour chaque famille, elle donne le score TD 1 de chaque modèle, le premier modèle, le contrôle selon l'usage et la conduite à tenir quand le premier modèle est indisponible ;
+- le simulateur adapté, [td1/atelier-routage-regle.py](../td1/atelier-routage-regle.py). `RESOURCES` contient nos cinq modèles et les routes payantes Groq Developer. `choose` applique la règle et relit [model-question-comparison-en.csv](../td1/model-question-comparison-en.csv) à chaque lancement : chaque raison (`run`, `defer` ou `abstain`) cite les cellules TD 1 qui la justifient ;
+- les sorties du simulateur fourni, [simulateur-avant.jsonl](../td2/C-routing/simulateur-avant.jsonl), et du simulateur adapté, [simulateur-apres.jsonl](../td2/C-routing/simulateur-apres.jsonl) ;
+- le rejeu des panels de quorum sur les traces réelles du TD 1, [rejeu-panels-td1.jsonl](../td2/C-routing/rejeu-panels-td1.jsonl).
+
+Les disponibilités, les délais de recharge et les budgets des scénarios sont **simulés**. Les scores et les cellules viennent du lot réel du TD 1. Les coûts sont des équivalents facturés : la dépense réelle du TD est de 0.
+
+### 3.1 Ce que la règle retient
+
+gpt-oss-20b est le premier modèle partout, sauf pour l'âge à une date, où il se trompe sur C02 et C11. Sur cette famille, seul gpt-oss-120b est à 4/4. Le rejeu des panels a guidé deux choix :
+
+- le panel fixe de l'atelier {120b, cohere, qwen} rend un consensus faux sur C09 (0 au lieu de 487980). On en retire cohere, qui est à 0/4 sur l'âge à une date ;
+- pour l'âge à la commande, {120b, qwen, dots} rend un consensus faux sur C10 (119410 au lieu de 558980). On passe donc directement au recalcul indépendant : aucun modèle gratuit ne suffit seul sur cette famille.
+
+### 3.2 Pourquoi `choose` prend un abonnement disponible avant d'attendre une route gratuite
+
+Les branches de `choose` dans [atelier-routage.py](../td1/atelier-routage.py) sont testées dans cet ordre :
+
+1. **Capacité incluse disponible** : ressource éligible, `available` et `cash == 0`. On prend le minimum sur la clé `(allocation, level, id)`. `small-free` (allocation 0) passe donc avant `senior-subscription` (allocation 0,04) quand les deux sont libres.
+2. **Attente** : ressource éligible, indisponible, `cash == 0`, avec `0 < reset_minutes <= deadline_minutes`. Cette branche n'est prise que si `can_wait` est vrai, et on choisit la recharge la plus proche.
+3. **Route payante** : ressource disponible avec `cash <= budget`. On prend le minimum sur la clé `(cash, allocation, id)`.
+4. **Abstention**.
+
+Un abonnement disponible remplit la condition de la branche 1 (`cash == 0`), même si son `allocation` est positive. La branche 1 est testée avant la branche 2. L'abonnement passe donc avant toute attente, même quand la route gratuite épuisée se recharge avant l'échéance. On l'a vérifié avec le `choose` d'origine, non modifié ([atelier-routage-priorite.py](../td1/atelier-routage-priorite.py), sortie dans [priorite-abonnement.jsonl](../td2/C-routing/priorite-abonnement.jsonl)) :
+
+| Scénario simulé (difficulté 1, `can_wait`, échéance 120 min) | Décision |
+|---|---|
+| `small-free` épuisé, recharge dans 30 min ; abonnement disponible | `run` sur `senior-subscription` (cash 0) |
+| `small-free` et abonnement épuisés, recharge dans 30 min | `defer` sur `small-free` (réveil dans 30 min) |
+
+Cette priorité se justifie de trois façons :
+
+- l'allocation est déjà payée : l'utiliser n'ajoute aucune dépense (`cash` 0) ;
+- la réponse arrive tout de suite, sans retard ;
+- une heure de recharge ne prouve pas que la capacité sera revenue. Le docstring le dit lui-même : la disponibilité doit être mesurée à nouveau au réveil, donc attendre fait courir le risque de rater l'échéance.
+
+Il faut inverser la priorité quand consommer l'allocation a un **coût d'opportunité ou un coût réel**. C'est le cas quand le quota d'abonnement est rare et doit être gardé pour les requêtes de niveau 3 que seule la ressource senior sait traiter, quand il est partagé par l'équipe, ou quand son dépassement est facturé. Dans ces situations, une requête de niveau 1 qui peut attendre, avec une recharge certaine bien avant l'échéance, devrait différer sur la route gratuite. Il faudrait alors ajouter au tri de la branche 1 le coût de l'allocation, ou réserver l'abonnement aux requêtes dont la difficulté l'exige.
+
+Notre règle suit la même logique. Elle prend d'abord le modèle éligible suivant en capacité gratuite (gpt-oss-120b si gpt-oss-20b est épuisé), puis elle attend la recharge, puis elle passe par la route payante si un budget est autorisé, et sinon elle s'abstient. Nos routes n'ont pas d'abonnement : le Free de Groq et les routes `:free` d'OpenRouter ne coûtent rien et n'ont pas d'allocation prépayée.
+
+### 3.3 Limites
+
+La règle repose sur un seul passage de 20 questions sur une seule base. C'est une hypothèse de routage pour ce lot, pas un taux d'erreur, pas un classement durable, et pas une garantie du quorum. La famille « âge à la commande » ne repose que sur C10 (et C18 parmi les combinées).
+
+Les sorties de l'étape 3 viennent de l'archive locale du kit (`2026-10-14-students-1`). L'énoncé en ligne est en version `2026-11-18-students-5`. Son `atelier-routage.py`, relu le 18/11/2026, est identique au nôtre.
 
 ## 4. Contributions
 
