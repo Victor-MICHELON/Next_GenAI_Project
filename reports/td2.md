@@ -108,7 +108,119 @@ Aucun HTTP 429 dans nos traces : les 100 lignes sont en HTTP 200. Les deux seule
 
 ## 2. Étape 2 - Le faux consensus (binôme B)
 
-<TODO binôme B>
+Tout est rejouable sans réseau ; la base est ouverte en lecture seule :
+
+```
+python td2/B-consensus/consensus_errone.py          # recherche, votes, delta, DEMO-VOTE
+sqlite3 -readonly td1/data/boutique.sqlite < td2/B-consensus/delta_queries.sql
+```
+
+Fichiers : [consensus_errone.py](../td2/B-consensus/consensus_errone.py), [delta_queries.sql](../td2/B-consensus/delta_queries.sql).
+
+### 2.1 Recherche dans nos traces
+
+On a pris la dernière tentative de chaque cellule de `td1/traces-td1.csv` (100 cellules réelles, 5 modèles × 20 questions), puis on a regroupé les verdicts `incorrect` par (question, valeur). Deux valeurs fausses sont partagées par au moins deux modèles. On a donc travaillé sur **nos propres traces**, et le cas historique DEMO-SQL-C11 n'a pas servi.
+
+| Question | Valeur fausse partagée | Modèles d'accord | Référence (`reference-td1.csv`) | Panel fixe 2-sur-3 | Quorum 3-sur-5 |
+|---|---|---|---|---|---|
+| **C09** (cas principal) | 0 | qwen/qwen3.8-27b (Groq), cohere/north-mini-code:free (OpenRouter) | 487980 | **consensus 0, 2 voix : faux consensus** | abstention (2 voix pour 0, 2 pour 487980, 1 pour 47900) |
+| C10 (cas secondaire) | 119410 | qwen/qwen3.8-27b (Groq), dots-studio/dots-3-note-preview:free (OpenRouter) | 558980 | abstention (max 1, cohere en `sql_invalid`) | abstention (2 contre 2) |
+
+On a d'abord compté les voix à la main, puis on les a vérifiées avec le `vote_k_sur_n` du binôme A (script `consensus_errone.py`, qui reprend `proposals_for` d'`atelier-vote.py`). La référence n'est lue qu'après la décision.
+
+### 2.2 C09 : le faux consensus qui gagne le 2-sur-3
+
+Question C09 : CA HT, en centimes, de toutes les commandes des clients qui ont exactement 25 ans le 2026-09-26. Un client a 25 ans ce jour-là s'il est né entre le 2000-09-27 et le 2001-09-26 inclus, c'est-à-dire `birth_date > '2000-09-26' AND birth_date <= '2001-09-26'`. La référence vaut 487980, et on la retrouve en ré-exécutant la requête de `reference-td1.csv`.
+
+Le panel fixe est {gpt-oss-120b, north-mini-code, qwen3.8-27b} avec k = 2. qwen et cohere répondent 0 (HTTP 200, `incorrect`), et 120b répond 487980 (`correct`). Le vote rend **0 avec 2 voix** : une valeur fausse qui a l'apparence d'un accord. En 3-sur-5, gpt-oss-20b rejoint 120b sur 487980 et dots répond 47900. Aucune valeur n'atteint 3 voix, donc le quorum s'abstient au lieu d'inventer une valeur.
+
+**Les deux requêtes fautives, telles que renvoyées par les modèles :**
+
+```sql
+-- qwen/qwen3.8-27b (Groq) -> 0
+SELECT COALESCE(SUM(o.quantity_product * p.price), 0) AS revenue_cents
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+JOIN product p ON o.product_id = p.product_id
+WHERE (strftime('%Y', o.date) - strftime('%Y', c.birth_date)) = 25
+  AND (strftime('%m-%d', o.date) >= strftime('%m-%d', c.birth_date))
+  AND (strftime('%m-%d', o.date) < strftime('%m-%d', date(c.birth_date, '+26 years')));
+
+-- cohere/north-mini-code:free (OpenRouter) -> 0
+SELECT COALESCE(SUM(o.quantity_product * p.price), 0) AS revenue_cents
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN product p ON o.product_id = p.product_id
+WHERE
+  (
+    CAST(SUBSTR(c.birth_date, 1, 4) AS INTEGER) +
+    CASE
+      WHEN SUBSTR(c.birth_date, 6, 2) > '09' THEN -1
+      WHEN SUBSTR(c.birth_date, 6, 2) = '09' AND SUBSTR(c.birth_date, 9, 2) > '26' THEN -1
+      ELSE 0
+    END
+  ) = 25
+  AND o.date >= '2026-09-26 00:00:00' AND o.date < '2026-10-01 00:00:00';
+```
+
+**Clauses fautives.** Les deux requêtes arrivent à 0 pour des raisons différentes, et chacune des deux causes suffit à vider l'ensemble des lignes. Nous avons vérifié chaque condition séparément sur `boutique.sqlite` :
+
+- **qwen, avec deux erreurs.**
+  1. L'âge est calculé à la date de chaque commande (`o.date`) au lieu de la date de référence 2026-09-26. Il répond donc à la question d'une autre famille (F2b, l'âge au moment de la commande, comme C10).
+  2. Surtout, la troisième condition contredit la deuxième. `date(c.birth_date, '+26 years')` garde le même mois et le même jour que `birth_date`. Aucun client n'est né un 29 février : nous l'avons vérifié, avec 0 client sur 59 dont le jour-mois change. La conjonction `md(o) >= md(b) AND md(o) < md(b)` est donc toujours fausse. Mesure : la condition 1 seule garde 72 lignes, les conditions 1 et 2 en gardent 14, et les conditions 1, 2 et 3 n'en gardent **aucune**.
+- **cohere, avec deux erreurs.**
+  1. L'expression censée calculer l'âge oublie de soustraire l'année de naissance à 2026. `CAST(SUBSTR(birth_date,1,4) AS INTEGER) + ajustement` vaut l'année de naissance (de 1958 à 2006 dans la base), et ne peut jamais valoir 25. Avec `2026 - ...`, la seule condition d'âge donnerait exactement 487980.
+  2. Le modèle ajoute un filtre de période qui n'est pas dans la question (`o.date >= '2026-09-26' AND o.date < '2026-10-01'`). La dernière commande de la base date du 2026-09-20 19:24:25, donc cette fenêtre contient 0 commande.
+- **Le mécanisme commun est `COALESCE(SUM(...), 0)`.** Un filtre trop restrictif ne produit pas d'erreur : il produit un ensemble vide, et la somme de cet ensemble vide est convertie en 0. Le 0 est une valeur attracteur, sur laquelle des requêtes fausses de manières différentes finissent par se rejoindre. Le vote compte des valeurs, pas des raisonnements, donc deux erreurs indépendantes deviennent deux voix pour la même valeur.
+
+**Requête delta sur `data/boutique.sqlite`.** Elle liste les clients comptés par la référence. Comme la valeur fausse est 0, toutes leurs lignes sont manquées par les requêtes fautives :
+
+```sql
+SELECT c.customer_id, c.birth_date,
+       COUNT(*) AS nb_lignes_commande,
+       SUM(o.quantity_product * p.price) AS revenue_cents
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+JOIN product   p ON o.product_id  = p.product_id
+WHERE c.birth_date >  date('2026-09-26', '-26 years')
+  AND c.birth_date <= date('2026-09-26', '-25 years')
+GROUP BY c.customer_id, c.birth_date
+ORDER BY c.birth_date;
+```
+
+| customer_id | birth_date | lignes | revenue_cents |
+|---|---|---|---|
+| C007 | 2000-11-30 | 18 | 118740 |
+| C009 | 2001-03-10 | 9 | 61330 |
+| C008 | 2001-05-15 | 11 | 99090 |
+| C002 | 2001-09-24 | 6 | 25920 |
+| C001 | 2001-09-25 | 18 | 135000 |
+| C003 | 2001-09-26 | 6 | 47900 |
+| **Total** | | **68** | **487980** |
+
+Le total vaut 487980 − 0 = 487980 centimes : le delta explique **tout** l'écart. Le script le vérifie aussi ligne de commande par ligne de commande, de façon générique. Il remplace le `SUM` de chaque requête fautive par la liste de ses lignes `(order_id, product_id)` et fait la différence d'ensembles avec la référence. On obtient 68 lignes manquées pour 487980 centimes, et 0 ligne ajoutée à tort, pour chacun des deux modèles.
+
+À noter : C003, né le 2001-09-26, a ses 25 ans pile le jour de référence. C'est le cas limite de la borne `<=`. La réponse de dots (47900) correspond exactement à ce seul client : son `strftime(birth_date, '25 years') = '2026-09-26'` ne garde que les clients dont c'est l'anniversaire ce jour-là.
+
+### 2.3 C10 : le faux accord qui ne gagne pas (cas secondaire)
+
+Question C10 : CA HT des commandes passées par des clients qui avaient exactement 25 ans au moment de la commande. La référence vaut 558980. qwen et dots renvoient tous les deux 119410 avec deux SQL différents, mais avec le même raisonnement : l'écart d'années civiles vaut 25 **et** l'anniversaire est déjà passé dans l'année. Cette clause ne couvre qu'une partie de la 25e année : la partie qui tombe dans l'année civile du 25e anniversaire. Elle oublie les commandes passées l'année civile suivante, avant le 26e anniversaire, où l'écart d'années vaut 26 et où le client a pourtant encore 25 ans. La branche `OR` de qwen (écart de 24 et anniversaire pas encore passé, donc 23 ans) n'ajoute aucune ligne.
+
+La requête delta (`delta_queries.sql`, 3e requête) prend les lignes retenues par la référence et non retenues par la clause partagée. Elle renvoie **59 lignes pour 439570 centimes** = 558980 − 119410, sur 4 clients nés en 2000 : C022 (20330), C004 (150260), C005 (150240) et C007 (118740). Ces clients avaient 25 ans en 2026, avant leur anniversaire.
+
+Le vote ne livre pas cette valeur fausse. En 2-sur-3, cohere est en `sql_invalid` et reste dans n sans voter, donc l'abstention se fait à 1 voix. En 3-sur-5, l'égalité est de 2 contre 2. Il manquait **une seule voix** pour que 119410 gagne le 3-sur-5.
+
+### 2.4 Mécanisme illustré : DEMO-VOTE (exemple construit)
+
+Exemple construit par l'énoncé, pas une sortie de modèle. La table jouet `sales` est créée en mémoire et contient une seule ligne (`2026-01-01`, 100). Avec `sale_date > '2026-01-01' AND sale_date < '2026-01-02'`, on obtient 0, parce que la borne de début est exclue et que la vente du 1er janvier disparaît. Avec `>=`, on obtient 100, ce qui est la référence. Le vote 2-sur-3 sur les propositions [0, 0, 100], exécuté avec notre `vote_k_sur_n`, rend un consensus 0 à 2 voix : c'est un faux consensus. On retrouve le même mécanisme que pour C09 : une borne ou un filtre trop strict, un ensemble vide, puis `COALESCE` qui renvoie 0.
+
+### 2.5 Méthode de vérification indépendante et conséquences pour le contrôle
+
+- **Vérification indépendante.** La référence est la requête de `reference-td1.csv`, écrite avec des bornes explicites sur `birth_date` et ré-exécutée sur la base, ce qui redonne 487980. Elle est recoupée par le delta, qui liste ligne par ligne les clients concernés : leur date de naissance permet de vérifier l'âge à la main. Elle est aussi confirmée par 120b et 20b, qui trouvent 487980 avec deux SQL différents.
+- **Un accord ne prouve pas la justesse.** Sur C09, le panel 2-sur-3 livre un 0 faux avec deux voix. Le 3-sur-5 s'abstient ici, mais seulement parce que 20b est juste. Sur C10, il manquait une voix pour que le 3-sur-5 se trompe lui aussi.
+- **Un 0 ou un ensemble vide doit déclencher un contrôle.** Une valeur 0 issue d'un `COALESCE(SUM(...),0)` doit être vérifiée de façon déterministe avant d'être livrée, par exemple avec un `COUNT(*)` des lignes filtrées, ou en la comparant à la référence. Ce contrôle est particulièrement nécessaire quand le chiffre est montré à un client ou qu'il conditionne un paiement.
+- **Les questions d'âge (F2 et F2b) sont celles où les modèles gratuits se trompent ensemble.** Pour le binôme C, cela veut dire qu'aucun modèle gratuit seul ne suffit sur ces familles : la règle doit imposer un quorum et un contrôle déterministe.
+- **Limite.** Ces conclusions reposent sur 20 questions, une seule base et une seule tentative par cellule. C'est une hypothèse propre à ce lot, pas un taux d'erreur général.
 
 ## 3. Étape 3 - La règle de routage (binôme C)
 
