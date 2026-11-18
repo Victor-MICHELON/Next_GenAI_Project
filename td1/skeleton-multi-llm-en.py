@@ -624,7 +624,37 @@ class Orchestrateur:
         families, and look in your traces for a case where several models agree
         on a wrong value.
         """
-        raise NotImplementedError("vote_k_sur_n: to implement in TD 2 (see the procedure in the docstring).")
+        n = len(traces_question)
+        # Majorité stricte : avec k <= n // 2, deux valeurs différentes pourraient
+        # toutes les deux atteindre k, le vote ne serait plus une décision.
+        if not (n // 2 < k <= n):
+            raise ValueError(f"k={k} is not a strict majority of n={n} (need {n // 2} < k <= {n}).")
+
+        # Un même couple (provider, modèle) ne vote qu'une fois : un doublon
+        # gonflerait artificiellement le nombre de voix.
+        seen = set()
+        for proposal in traces_question:
+            key = (proposal.provider, proposal.model_requested)
+            if key in seen:
+                raise ValueError(f"duplicate proposal for {key[0]}:{key[1]}: a duplicate is not a second vote.")
+            seen.add(key)
+
+        # Seules les propositions exécutées avec une valeur votent. Les autres
+        # (erreur, 429, SQL invalide) restent dans n mais sans voix.
+        ballots: dict = {}
+        for proposal in traces_question:
+            if proposal.verdict == "executed" and proposal.value is not None:
+                ballots.setdefault(proposal.value, []).append(
+                    f"{proposal.provider}:{proposal.model_requested}")
+
+        if not ballots:
+            return {"consensus": False, "value": None, "votes": 0, "models": []}
+
+        value, models = max(ballots.items(), key=lambda item: len(item[1]))
+        if len(models) >= k:
+            return {"consensus": True, "value": value, "votes": len(models), "models": models}
+        # Pas de quorum : on s'abstient, on ne fabrique jamais de valeur.
+        return {"consensus": False, "value": None, "votes": len(models), "models": []}
 
 
 # ==========================================================================
