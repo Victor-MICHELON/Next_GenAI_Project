@@ -2,7 +2,7 @@
 
 Compte rendu du sous-groupe, séance du 18 novembre 2026.
 
-Tout ce TD est fait à partir des traces stockées du TD 1 ([traces-td1.csv](../td1/traces-td1.csv), 100 lignes `real`, une par cellule) et de [reference-td1.csv](../td1/reference-td1.csv). Aucun nouvel appel réseau n'a été lancé.
+Tout ce TD est fait à partir des traces stockées du TD 1 ([traces-td1.csv](../td1/traces-td1.csv), 100 lignes `real`, une par cellule) et de [reference-td1.csv](../td1/reference-td1.csv). Aucun nouvel appel réseau n'a été lancé. Les prompts n'ont pas changé depuis le TD 1 : ce sont ceux de [prompt-experience-td1.md](../td1/prompts/prompt-experience-td1.md), avec la même empreinte `prompt_sha256` par question dans les traces.
 
 ## 1. Étape 1 - Le vote k-sur-n (binôme A)
 
@@ -274,8 +274,16 @@ Les sorties de l'étape 3 viennent de l'archive locale du kit (`2026-10-14-stude
 
 ## 4. Contributions
 
-<TODO>
+| Membre | Rôle | Contribution |
+|---|---|---|
+| Victor MICHELON | binôme A, étape 1 | `vote_k_sur_n` dans [skeleton-multi-llm-en.py](../td1/skeleton-multi-llm-en.py), les quatre exemples synthétiques, la comparaison 2 sur 3 / 3 sur 5 sur les 20 questions ([td2/A-quorum/](../td2/A-quorum/)) |
+| Jean-Baptiste PASTEAU | binôme B, étape 2 | recherche des valeurs fausses partagées, diagnostic SQL de C09 et C10, requêtes delta sur `boutique.sqlite`, DEMO-VOTE ([td2/B-consensus/](../td2/B-consensus/)) |
+| Bertrand MAIGRE | binôme C, étape 3 | scores TD 1 par famille, règle de routage d'une page, simulateur adapté et analyse de la priorité dans `choose` ([td2/C-routing/](../td2/C-routing/)) |
+| Oscar DUJARDIN, Héloïse MOYNOT | étape 4 | préparation et présentation de la plénière (consensus faux et règle du sous-groupe) |
 
 ## 5. Suites
 
-<TODO>
+- **TD 3 : chiffrer le contrôle.** Les questions d'âge sont celles où aucun modèle gratuit ne suffit seul. Pour l'âge à la commande (C10), aucun panel de trois familles distinctes ne tient, et pour l'âge à une date, C09 donne un consensus faux dans le panel fixe. Leur contrôle (quorum, recalcul indépendant, relecture) fixe le prix de la règle : c'est lui qu'il faut chiffrer avec [methode-cout-en.md](../td3/methode-cout-en.md), en gardant séparées la dépense réelle (0 au TD) et l'équivalent facturé.
+- **Contrôler les 0.** C09 montre qu'un filtre trop strict suivi de `COALESCE(SUM(...), 0)` produit un 0 sur lequel des modèles différents se rejoignent. Une piste à intégrer à la règle : tout résultat à 0 déclenche un contrôle sans LLM (`COUNT(*)` des lignes filtrées) avant d'être livré.
+- **Étendre la base de preuves.** Toute la règle repose sur un passage de 20 questions. Il faudrait des questions répétées et un échantillon indépendant pour parler de taux d'erreur, en particulier sur l'âge à la commande, qui ne repose que sur C10 et C18.
+- **Mettre à jour le kit.** Nos fichiers viennent de l'archive `2026-10-14-students-1` ; il faut récupérer le pack `2026-11-18-students-5` avant le TD 3 et vérifier que nos scripts tournent dessus.
