@@ -9,7 +9,7 @@ three supplied CSV files. No Groq or OpenRouter call was made.
 - Queries: `scripts/reference_queries.sql`.
 - Consolidated reference: `reference-td1.csv` (one query and one amount per case).
 - CSV cross-check and SQL runner: `scripts/verify_references.py`.
-- Per-case evidence: `reports/reference-verification.csv`.
+- Per-case evidence: `td1/reports/reference-verification.csv`.
 - Database SHA-256: `0077e235adc2ca647b484e3083c98a6d7cae3ef3655ce366a299caf13398fec2`.
 
 ## Reproduce from the repository root
@@ -52,7 +52,7 @@ between them is a computational cross-check, not an independent human review.
 No other member's review or instructor answer-key validation has yet been
 observed. Record the reviewer, cases reviewed, date and any corrections here
 after that review. Do not label these references instructor-validated yet.
-The code-assistance request is retained in `reports/reference-ai-assistance.md`.
+The code-assistance request is retained in `td1/reports/reference-ai-assistance.md`.
 
 Before the model batches, another member should inspect the boundary cases,
 age predicates and amounts, and the group should show the twenty values to the
